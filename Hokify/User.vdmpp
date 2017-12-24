@@ -29,10 +29,15 @@ operations
 		return cv;
 		
 	
-	public addJob(job: Job) ==
-			jobs := jobs union {job}
-			pre job not in set jobs
-			post job in set jobs;
+	public addJob(j: Job) ==
+				jobs := jobs union {j}
+			pre j not in set jobs
+			post j in set jobs;
+			
+	public removeJob(j: Job) ==
+				jobs := jobs \ {j}
+			pre j in set jobs
+			post j not in set jobs;
 
 
 		

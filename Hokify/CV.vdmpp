@@ -17,12 +17,12 @@ types
 values
 -- TODO Define values here
 instance variables
-	interests : set of CV`Interests;
-	skills : set of CV`Skills;
+	interests : set of Interests := {};
+	skills : set of Skills := {};
 	
 		
 operations
-	public CV(i: set of CV`Interests,s: set of CV`Skills) res: CV == (
+	public CV(i: set of Interests,s: set of Skills) res: CV == (
 		interests := i;
 		skills := s;
 	
@@ -30,22 +30,35 @@ operations
 	post res.interests = interests and res.skills = skills;
 
 	
-	public getInterests() res: set of CV`Interests ==
+	public getInterests() res: set of Interests ==
 		return interests;
 		
-	public getSkills() res: set of CV`Skills ==
+	public getSkills() res: set of Skills ==
 		return skills;
 				
+				
+ public addInterest(i: Interests) ==
+    		interests := interests union {i}
+    	pre i not in set interests
+    	post i in set interests;
+    	
+    	
+ public removeInterest(i: Interests) ==
+    		interests := interests \ {i}
+			pre i in set interests
+			post i not in set interests;
+				
+ public addSkill(s: Skills) ==
+    		skills := skills union {s}
+ 			pre s not in set skills
+ 			post s in set skills;
+ 
+ public removeSkill(s: Skills) ==
+    		skills := skills \ {s}
+    	pre s in set skills
+    	post s not in set skills;
 
-public addInterest(interest: CV`Interests) ==
-			interests := interests union {interest}
-			pre interest not in set interests
-			post interest in set interests;
-
-public addSKill(skill: CV`Skills) ==
-			skills := skills union {skill}
-			pre skill not in set skills
-			post skill in set skills;		
+		
 		
 functions
 -- TODO Define functiones here
