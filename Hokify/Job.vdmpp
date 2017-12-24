@@ -1,24 +1,39 @@
 class Job
 types
--- TODO Define types here
+	public Jobs = <SoftwareEngineer> | <Manager> | <Architect> | <Witer> |
+								 <Analyst> | <Designer> | <Teacher> | <Editor> |
+								 <Interpreter> | <Nurse> | <Scientist> | <DrivingInstructor> |
+								 <Attorney> | <SalesRepresentative> | <Actor> | <Accountant> |
+								 <Lawyer> | <Police> | <Doctor> | <Programmer>;
 values
 -- TODO Define values here
 instance variables
-	title: seq of char;
+	job: Jobs;
 	availability: bool;
 	
 operations
-	public Job(t: seq of char, a: bool) res: Job == (
-		title := t;
+	public Job(j: Jobs, a: bool) res: Job == (
+		job := j;
 		availability := a;
 	)
-	post res.title = title and res.availability = availability;
+	post res.job= job and res.availability = availability;
 	
-	public getTitle() res: seq of char ==
-		return title;
+	public getJob() res: Jobs ==
+		return job;
+		
+ 	public setJob(j: Job) ==
+    		job := job;
 		
 	public getAvailability() res: bool ==
 		return availability;
+		
+	public setAvailabilityTrue() ==
+		availability := true
+		post availability = true;
+		
+	public setAvailabilityFalse() ==
+		availability := false
+		post availability = false;
 		
 functions
 -- TODO Define functiones here
