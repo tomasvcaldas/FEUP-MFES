@@ -1,15 +1,28 @@
 class CV
 types
--- TODO Define types here
+		public Interests = <IndividualSports> | <TeamSports> | <Music> | <Traveling> |
+											 <Socializing> | <Painting> | <Dancing> | <Reading> |
+											 <Writing> | <Computer> | <Animals> | <Mentoring> |
+											 <Puzzles> | <Photography> | <Cinema> | <Politics> |
+											 <Religion> | <Food> | <Volunteering> | <Cooking>;
+											 
+		public Skills =	 	 <DataAnalysis> | <Copywriting> | <ForeignLanguages> | <Accounting> |
+											 <Programming> | <Mathematics> | <GraphicDesign> | <EventPlanning> |
+											 <Marketing> | <Bookkeeping> | <Communication> | <DecisionMaking> |
+											 <Leadership> | <Adaptability> | <Teamwork> | <Creativity> |
+											 <SelfMotivation> | <QuickLearner> | <Responsible> | <Flexible>;									 
+											 
+		
+		
 values
 -- TODO Define values here
 instance variables
-	interests : seq of char := [];
-	skills : seq of char := [];
+	interests : set of CV`Interests;
+	skills : set of CV`Skills;
 	
 		
 operations
-	public CV(i: seq of char,s: seq of char) res: CV == (
+	public CV(i: set of CV`Interests,s: set of CV`Skills) res: CV == (
 		interests := i;
 		skills := s;
 	
@@ -17,22 +30,22 @@ operations
 	post res.interests = interests and res.skills = skills;
 
 	
-	public getInterests() res: seq of char ==
+	public getInterests() res: set of CV`Interests ==
 		return interests;
 		
-	public getSkills() res: seq of char ==
+	public getSkills() res: set of CV`Skills ==
 		return skills;
 				
 
---	public addInterest(interest: seq of char) ==
---			interests := interests union {interest}
---			pre interest not in set interests
---			post interest in set interests;
+public addInterest(interest: CV`Interests) ==
+			interests := interests union {interest}
+			pre interest not in set interests
+			post interest in set interests;
 
---	public addSKill(skill: seq of char) ==
---			skills := skills union {skill}
---			pre skill not in set skills
---			post skill in set skills;		
+public addSKill(skill: CV`Skills) ==
+			skills := skills union {skill}
+			pre skill not in set skills
+			post skill in set skills;		
 		
 functions
 -- TODO Define functiones here
