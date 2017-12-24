@@ -1,0 +1,44 @@
+class User
+types
+-- TODO Define types here
+values
+-- TODO Define values here
+instance variables
+		firstName: seq of char;
+		lastName: seq of char;
+		jobs:	set of Job := {};
+		cv : CV := new CV();
+		
+operations
+	public User(fName: seq of char, lName: seq of char) res: User == (
+			firstName := fName;
+			lastName := lName;
+	)	
+			post res.firstName = fName and res.lastName = lName;
+	
+	public getFirstName() res: seq of char ==
+		return firstName;
+		
+	public getLastName() res: seq of char ==
+		return lastName;
+		
+	public getJobs() res: set of Job ==
+		return jobs;
+		
+	public getCV() res: CV == 
+		return cv;
+		
+	
+	public addJob(job: Job) ==
+			jobs := jobs union {job}
+			pre job not in set jobs
+			post job in set jobs;
+
+
+		
+	
+functions
+-- TODO Define functiones here
+traces
+-- TODO Define Combinatorial Test Traces here
+end User

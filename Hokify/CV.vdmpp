@@ -1,0 +1,29 @@
+class CV
+types
+-- TODO Define types here
+values
+-- TODO Define values here
+instance variables
+	interests : seq of char := [];
+	
+	
+operations
+	public CV(i: seq of char) res: CV == (
+		interests := i;
+	
+	)
+	post res.interests = interests;
+	
+	public getInterests() res: seq of char ==
+		return interests;
+		
+--	public addInterest(interest: seq of char) ==
+--			interests := interests union {interest}
+--			pre interest not in set interests
+--			post interest in set interests;
+		
+functions
+-- TODO Define functiones here
+traces
+-- TODO Define Combinatorial Test Traces here
+end CV

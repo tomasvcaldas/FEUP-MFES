@@ -1,0 +1,27 @@
+class Job
+types
+-- TODO Define types here
+values
+-- TODO Define values here
+instance variables
+	title: seq of char;
+	availability: bool;
+	
+operations
+	public Job(t: seq of char, a: bool) res: Job == (
+		title := t;
+		availability := a;
+	)
+	post res.title = title and res.availability = availability;
+	
+	public getTitle() res: seq of char ==
+		return title;
+		
+	public getAvailability() res: bool ==
+		return availability;
+		
+functions
+-- TODO Define functiones here
+traces
+-- TODO Define Combinatorial Test Traces here
+end Job
