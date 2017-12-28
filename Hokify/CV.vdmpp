@@ -1,6 +1,6 @@
 class CV
 types
-		public Interests = <IndividualSports> | <TeamSports> | <Music> | <Traveling> |
+		public Hobbies = <IndividualSports> | <TeamSports> | <Music> | <Traveling> |
 											 <Socializing> | <Painting> | <Dancing> | <Reading> |
 											 <Writing> | <Computer> | <Animals> | <Mentoring> |
 											 <Puzzles> | <Photography> | <Cinema> | <Politics> |
@@ -12,53 +12,86 @@ types
 											 <Leadership> | <Adaptability> | <Teamwork> | <Creativity> |
 											 <SelfMotivation> | <QuickLearner> | <Responsible> | <Flexible>;									 
 											 
+		public education = <HighSchool> | <FineSecondarySchool> | <Teaching> | <MandatorySchool> | <UniversityCollege> | <Other>;
+		
+		public drivingLicense = <A> | <B> | <C> | <D>;
+		
+		public languages = <Portuguese> | <German> | <English> | <French> | <Italian> | <Polish> | <Spanish> | <Russian>;
+		
 		
 		
 values
 -- TODO Define values here
 instance variables
-	interests : set of Interests := {};
+	hobbies : set of Hobbies := {};
 	skills : set of Skills := {};
+	workExperience:	set of Job := {};
 	
 		
 operations
-	public CV(i: set of Interests,s: set of Skills) res: CV == (
-		interests := i;
+	public CV(h: set of Hobbies,s: set of Skills) res: CV == (
+		hobbies := h;
 		skills := s;
 	
 	)
-	post res.interests = interests and res.skills = skills;
+	post res.hobbies = hobbies and res.skills = skills;
 
+			pure public getHobbies: () ==> set of Hobbies
+				getHobbies()  ==
+				return hobbies;
+				
+			pure public getSkills: () ==> set of Skills
+				getSkills()  ==
+				return skills;				
+
+			pure public getWorkExperience: () ==> set of Job
+				getWorkExperience()  ==
+				return workExperience;	
 	
-	public getInterests() res: set of Interests ==
-		return interests;
-		
-	public getSkills() res: set of Skills ==
-		return skills;
+	
+			public addJob : Job ==> ()
+				addJob(j) == 
+				workExperience := workExperience union {j}
+					pre j not in set workExperience
+    			post j in set workExperience;
 				
+ 			public removeJob : Job ==> ()
+				removeJob(j) == 
+				workExperience := workExperience \ {j}
+					pre j  in set workExperience
+    			post j not in set workExperience;
+    
+    			
+ 			public addHobbies : Hobbies ==> ()
+				addHobbies(h) == 
+				hobbies := hobbies union {h}
+					pre h not in set hobbies
+    			post h in set hobbies;
 				
- public addInterest(i: Interests) ==
-    		interests := interests union {i}
-    	pre i not in set interests
-    	post i in set interests;
-    	
-    	
- public removeInterest(i: Interests) ==
-    		interests := interests \ {i}
-			pre i in set interests
-			post i not in set interests;
-				
- public addSkill(s: Skills) ==
-    		skills := skills union {s}
- 			pre s not in set skills
- 			post s in set skills;
- 
- public removeSkill(s: Skills) ==
-    		skills := skills \ {s}
-    	pre s in set skills
-    	post s not in set skills;
+ 			public removeHobbies : Hobbies ==> ()
+				removeHobbies(h) == 
+				hobbies := hobbies \ {h}
+					pre h  in set hobbies
+    			post h not in set hobbies;
+    			   	
 
-		
+ 			public addSkill : Skills ==> ()
+				addSkill(s) == 
+				skills := skills union {s}
+					pre s not in set skills
+    			post s in set skills;
+				
+ 			public removeSkill : Skills ==> ()
+				removeSkill(s) == 
+				skills := skills \ {s}
+					pre s  in set skills
+    			post s not in set skills;
+    			
+    							
+
+    	
+
+    	
 		
 functions
 -- TODO Define functiones here

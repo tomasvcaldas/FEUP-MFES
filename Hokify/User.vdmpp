@@ -6,44 +6,53 @@ values
 instance variables
 		firstName: seq of char;
 		lastName: seq of char;
-		jobs:	set of Job := {};
-		cv : CV := new CV();
+		email: seq of char;
+		phonenumber: seq of nat;
+		curriculumVitae : CV;
 		
 operations
-	public User(fName: seq of char, lName: seq of char) res: User == (
+	public User(fName: seq of char, lName: seq of char,e: seq of char, p : seq of nat,  cv:CV ) res: User == (
 			firstName := fName;
 			lastName := lName;
+			email := e;
+			phonenumber := p;
+			curriculumVitae := cv;
 	)	
-			post res.firstName = fName and res.lastName = lName;
-	
-	public getFirstName() res: seq of char ==
-		return firstName;
-		
-	public getLastName() res: seq of char ==
-		return lastName;
-		
-	public getJobs() res: set of Job ==
-		return jobs;
-		
-	public getCV() res: CV == 
-		return cv;
-		
-	
-	public addJob(j: Job) ==
-				jobs := jobs union {j}
-			pre j not in set jobs
-			post j in set jobs;
+			post res.firstName = fName and res.lastName = lName and res.email = e and res.phonenumber = p and res.curriculumVitae = cv;
 			
-	public removeJob(j: Job) ==
-				jobs := jobs \ {j}
-			pre j in set jobs
-			post j not in set jobs;
+			pure public getFirstName: () ==> seq of char
+				getFirstName() ==
+ 				 return firstName;
+		
+			pure public getLastName: () ==> seq of char
+				getLastName()  ==
+				return lastName;
+				
+			pure public getEmail: () ==> seq of char
+				getEmail()  ==
+				return email;
+				
+			pure public getPhoneNumber: () ==> seq of nat
+				getPhoneNumber()  ==
+				return phonenumber;
+										
+			pure public getCV: () ==> CV
+				getCV()  ==
+				return curriculumVitae;
 
-
+			public addJob : Job ==> ()
+				addJob(j) == 
+				curriculumVitae.addJob(j);
+				
+			public removeJob : Job ==> ()
+				removeJob(j) ==
+				curriculumVitae.removeJob(j);
 		
 	
 functions
--- TODO Define functiones here
+
+
+
 traces
 -- TODO Define Combinatorial Test Traces here
 end User

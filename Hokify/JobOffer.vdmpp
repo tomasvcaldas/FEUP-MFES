@@ -1,0 +1,15 @@
+class JobOffer is subclass of Job
+types
+-- TODO Define types here
+values
+-- TODO Define values here
+instance variables
+	
+	openPositions: nat;
+operations
+-- TODO Define operations here
+functions
+-- TODO Define functiones here
+traces
+-- TODO Define Combinatorial Test Traces here
+end JobOffer

@@ -1,39 +1,47 @@
 class Job
 types
-	public Jobs = <SoftwareEngineer> | <Manager> | <Architect> | <Witer> |
-								 <Analyst> | <Designer> | <Teacher> | <Editor> |
-								 <Interpreter> | <Nurse> | <Scientist> | <DrivingInstructor> |
-								 <Attorney> | <SalesRepresentative> | <Actor> | <Accountant> |
-								 <Lawyer> | <Police> | <Doctor> | <Programmer>;
+								 
+	public Date :: year : nat1
+								 month: nat1
+								 day : nat1;
+
 values
 -- TODO Define values here
 instance variables
-	job: Jobs;
-	availability: bool;
-	
+	company: seq of char;
+	position: seq of char;
+
+
 operations
-	public Job(j: Jobs, a: bool) res: Job == (
-		job := j;
-		availability := a;
+	public Job(c: seq of char, p: seq of char) res: Job == (
+		company := c;
+		position := p;
+
 	)
-	post res.job= job and res.availability = availability;
 	
-	public getJob() res: Jobs ==
-		return job;
+	post res.company= c and res.position= p;
+	
+	
+				pure public getCompany: () ==> seq of char
+					getCompany()  ==
+					return company;
+				
+				pure public getPosition: () ==> seq of char
+					getPosition()  ==
+					return position;				
+
+				public setPosition: seq of char ==> ()
+					setPosition(p)  ==
+						position := p;
+					
+				public setCompany: seq of char ==> ()
+					setCompany(c)  ==
+						company := c;
+						
+
+
 		
- 	public setJob(j: Job) ==
-    		job := job;
-		
-	public getAvailability() res: bool ==
-		return availability;
-		
-	public setAvailabilityTrue() ==
-		availability := true
-		post availability = true;
-		
-	public setAvailabilityFalse() ==
-		availability := false
-		post availability = false;
+
 		
 functions
 -- TODO Define functiones here

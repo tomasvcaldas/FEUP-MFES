@@ -1,0 +1,29 @@
+class PastJob is subclass of Job
+types
+-- TODO Define types here
+values
+-- TODO Define values here
+instance variables
+	
+		startDate: Date;
+		endDate: Date;
+		inv validDates(startDate, endDate);
+operations
+-- TODO Define operations here
+functions 
+-- TODO Define functiones here
+--	private smallerDate() ret: bool == 
+--	  d2.year >= d1.year or (d2.year = d1.year and d2.month > d1.month) or 
+--			(d2.year = d1.year and d2.month = d1.month and d2.day > d1.day);
+			
+	public validDates : Date * Date -> bool
+	validDates(d1, d2) ==
+		d2 = undefined or d2.year >= d1.year or (d2.year = d1.year and d2.month > d1.month) or 
+			(d2.year = d1.year and d2.month = d1.month and d2.day > d1.day);
+		
+	
+	
+	
+traces
+-- TODO Define Combinatorial Test Traces here
+end PastJob
