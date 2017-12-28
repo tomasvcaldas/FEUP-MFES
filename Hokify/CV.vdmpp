@@ -1,18 +1,8 @@
 class CV
 types
-		public Hobbies = <IndividualSports> | <TeamSports> | <Music> | <Traveling> |
-											 <Socializing> | <Painting> | <Dancing> | <Reading> |
-											 <Writing> | <Computer> | <Animals> | <Mentoring> |
-											 <Puzzles> | <Photography> | <Cinema> | <Politics> |
-											 <Religion> | <Food> | <Volunteering> | <Cooking>;
+								 
 											 
-		public Skills =	 	 <DataAnalysis> | <Copywriting> | <ForeignLanguages> | <Accounting> |
-											 <Programming> | <Mathematics> | <GraphicDesign> | <EventPlanning> |
-											 <Marketing> | <Bookkeeping> | <Communication> | <DecisionMaking> |
-											 <Leadership> | <Adaptability> | <Teamwork> | <Creativity> |
-											 <SelfMotivation> | <QuickLearner> | <Responsible> | <Flexible>;									 
-											 
-		public education = <HighSchool> | <FineSecondarySchool> | <Teaching> | <MandatorySchool> | <UniversityCollege> | <Other>;
+		public education = <HighSchool> | <FineSecondarySchool> | <Teaching> | <MandatorySchool> | <UniversityCollege> ;
 		
 		public drivingLicense = <A> | <B> | <C> | <D>;
 		
@@ -23,24 +13,28 @@ types
 values
 -- TODO Define values here
 instance variables
-	hobbies : set of Hobbies := {};
-	skills : set of Skills := {};
+	hobbies : set of seq of char ;
+	skills : set of seq of char;
 	workExperience:	set of Job := {};
 	
 		
 operations
-	public CV(h: set of Hobbies,s: set of Skills) res: CV == (
-		hobbies := h;
-		skills := s;
-	
-	)
-	post res.hobbies = hobbies and res.skills = skills;
 
-			pure public getHobbies: () ==> set of Hobbies
+public CV: set of seq of char * set of seq of char * set of Job  ==> CV
+CV(h,s,we) == (
+				hobbies := h;
+				skills := s;
+				workExperience := we;
+				
+)
+
+	post hobbies = h and skills = s and workExperience = we;
+
+			pure public getHobbies: () ==> set of seq of char
 				getHobbies()  ==
 				return hobbies;
 				
-			pure public getSkills: () ==> set of Skills
+			pure public getSkills: () ==> set of seq of char
 				getSkills()  ==
 				return skills;				
 
@@ -62,37 +56,32 @@ operations
     			post j not in set workExperience;
     
     			
- 			public addHobbies : Hobbies ==> ()
+ 			public addHobbies : seq of char ==> ()
 				addHobbies(h) == 
 				hobbies := hobbies union {h}
 					pre h not in set hobbies
     			post h in set hobbies;
 				
- 			public removeHobbies : Hobbies ==> ()
+ 			public removeHobbies : seq of char ==> ()
 				removeHobbies(h) == 
 				hobbies := hobbies \ {h}
 					pre h  in set hobbies
     			post h not in set hobbies;
     			   	
 
- 			public addSkill : Skills ==> ()
+ 			public addSkill : seq of char ==> ()
 				addSkill(s) == 
 				skills := skills union {s}
 					pre s not in set skills
     			post s in set skills;
 				
- 			public removeSkill : Skills ==> ()
+ 			public removeSkill : seq of char ==> ()
 				removeSkill(s) == 
 				skills := skills \ {s}
 					pre s  in set skills
     			post s not in set skills;
     			
     							
-
-    	
-
-    	
-		
 functions
 -- TODO Define functiones here
 traces

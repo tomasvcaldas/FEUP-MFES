@@ -11,14 +11,17 @@ instance variables
 		curriculumVitae : CV;
 		
 operations
-	public User(fName: seq of char, lName: seq of char,e: seq of char, p : seq of nat,  cv:CV ) res: User == (
-			firstName := fName;
-			lastName := lName;
-			email := e;
-			phonenumber := p;
-			curriculumVitae := cv;
-	)	
-			post res.firstName = fName and res.lastName = lName and res.email = e and res.phonenumber = p and res.curriculumVitae = cv;
+
+public User: seq of char * seq of char * seq of char * seq of nat  ==> User
+User(fName,lName,e,p) == (
+				firstName := fName;
+				lastName := lName;
+				email := e;
+				phonenumber := p;
+				
+)
+		post firstName = fName and lastName = lName and email = e and phonenumber = p and curriculumVitae = undefined;
+
 			
 			pure public getFirstName: () ==> seq of char
 				getFirstName() ==
@@ -47,8 +50,22 @@ operations
 			public removeJob : Job ==> ()
 				removeJob(j) ==
 				curriculumVitae.removeJob(j);
-		
-	
+
+			public addSkill : seq of char ==> ()
+				addSkill(s) == 
+				curriculumVitae.addSkill(s);
+				
+			public removeSkill : seq of char ==> ()
+				removeSkill(s) ==
+				curriculumVitae.removeSkill(s);		
+
+			public addHobbies : seq of char ==> ()
+				addHobbies(h) == 
+				curriculumVitae.addHobbies(h);
+				
+			public removeHobbies : seq of char ==> ()
+				removeHobbies(h) ==
+				curriculumVitae.removeHobbies(h);					
 functions
 
 

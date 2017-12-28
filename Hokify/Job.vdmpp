@@ -13,13 +13,15 @@ instance variables
 
 
 operations
-	public Job(c: seq of char, p: seq of char) res: Job == (
-		company := c;
-		position := p;
 
-	)
-	
-	post res.company= c and res.position= p;
+public Job: seq of char * seq of char  ==> Job
+Job(c,p) == (
+				company:= c;
+				position := p;
+			
+				
+)
+	post company= c and position= p;
 	
 	
 				pure public getCompany: () ==> seq of char
