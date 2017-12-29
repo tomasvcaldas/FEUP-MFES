@@ -6,8 +6,61 @@ values
 instance variables
 	
 	openPositions: nat;
+	appliances: set of User;
+	neededSkills: set of seq of char;
+	requiredEducation: set of CV`education;
+	requiredDriversLicense: CV`drivingLicense;
+	requiredLanguage: set of CV`language;
+	
 operations
 -- TODO Define operations here
+public JobOffer : seq of char * seq of char * nat * set of seq of char * set of CV`education * CV`drivingLicense * set of CV`language ==> JobOffer
+JobOffer(c, p, openPos, skills, reqEdu, reqLicense, reqLang) == (
+				Job(c, p);
+        openPositions := openPos;
+        appliances := {};
+        neededSkills := skills;
+        requiredEducation := reqEdu;
+        requiredDriversLicense := reqLicense;
+        requiredLanguage := reqLang;
+);
+
+pure public getOpenPositions: () ==> nat
+        getOpenPositions()  ==
+        return openPositions;
+        
+pure public getAppliances: () ==> set of User
+        getAppliances()  ==
+        return appliances;
+        
+pure public getNeededSkills: () ==> set of seq of char
+        getNeededSkills()  ==
+        return neededSkills;
+        
+pure public getRequiredEducation: () ==> set of CV`education
+        getRequiredEducation()  ==
+        return requiredEducation;
+    
+pure public getRequiredDriversLicense: () ==> CV`drivingLicense
+        getRequiredDriversLicense()  ==
+        return requiredDriversLicense;
+        
+pure public getRequiredLanguage: () ==> set of CV`language
+        getRequiredLanguage()  ==
+        return requiredLanguage;
+ 
+public addAppliance : User ==> ()
+        addAppliance(user) ==
+        appliances := appliances union {user}
+        pre user not in set appliances
+        post user in set appliances;
+        
+public removeAppliance : User ==> ()
+        removeAppliance(user) ==
+        appliances := appliances \ {user}
+        pre user in set appliances
+        post user not in set appliances;
+
 functions
 -- TODO Define functiones here
 traces

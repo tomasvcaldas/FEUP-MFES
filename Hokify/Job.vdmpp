@@ -8,8 +8,8 @@ types
 values
 -- TODO Define values here
 instance variables
-	company: seq of char;
-	position: seq of char;
+	protected company: seq of char;
+	protected position: seq of char;
 
 
 operations
@@ -17,9 +17,7 @@ operations
 public Job: seq of char * seq of char  ==> Job
 Job(c,p) == (
 				company:= c;
-				position := p;
-			
-				
+				position := p;			
 )
 	post company= c and position= p;
 	
