@@ -6,7 +6,7 @@ types
 		
 		public drivingLicense = <A> | <B> | <C> | <D>;
 		
-		public languages = <Portuguese> | <German> | <English> | <French> | <Italian> | <Polish> | <Spanish> | <Russian>;
+		public language = <Portuguese> | <German> | <English> | <French> | <Italian> | <Polish> | <Spanish> | <Russian>;
 		
 		
 		
