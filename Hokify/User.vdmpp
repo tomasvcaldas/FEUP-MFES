@@ -9,6 +9,7 @@ instance variables
 		email: seq of char;
 		phonenumber: seq of nat;
 		curriculumVitae : CV;
+		jobOffer: set of JobOffer := {};
 		
 operations
 
@@ -18,6 +19,9 @@ User(fName,lName,e,p) == (
 				lastName := lName;
 				email := e;
 				phonenumber := p;
+				curriculumVitae := undefined;
+				
+				
 				
 )
 		post firstName = fName and lastName = lName and email = e and phonenumber = p and curriculumVitae = undefined;
@@ -26,7 +30,16 @@ User(fName,lName,e,p) == (
 				createCV() ==
 				curriculumVitae := new CV(firstName, lastName,email);
 				
-				
+			
+--			public fitForJob : Job ==> ()
+--				fitForJob(job) ==
+--				card (curriculumVitae.skills inter jobOffer.neededSkills) / card jobOffer.neededSkills;
+--			
+--			public getMatchingOffers: set of JobOffer  ==> () 
+--				getMatchingOffers(jobOffers) ==
+--				{offer in jobOffers | fitForJob(offer)};
+					
+
 			pure public getFirstName: () ==> seq of char
 				getFirstName() ==
  				 return firstName;
@@ -69,7 +82,9 @@ User(fName,lName,e,p) == (
 				
 			public removeHobbies : seq of char ==> ()
 				removeHobbies(h) ==
-				curriculumVitae.removeHobbies(h);					
+				curriculumVitae.removeHobbies(h);		
+				
+						
 functions
 
 
