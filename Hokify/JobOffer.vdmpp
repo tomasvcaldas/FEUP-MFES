@@ -16,13 +16,13 @@ operations
 -- TODO Define operations here
 public JobOffer : seq of char * seq of char * nat * set of seq of char * set of CV`education * CV`drivingLicense * set of CV`language ==> JobOffer
 JobOffer(c, p, openPos, skills, reqEdu, reqLicense, reqLang) == (
-				Job(c, p);
         openPositions := openPos;
         appliances := {};
         neededSkills := skills;
         requiredEducation := reqEdu;
         requiredDriversLicense := reqLicense;
         requiredLanguage := reqLang;
+        Job(c, p);
 );
 
 pure public getOpenPositions: () ==> nat
