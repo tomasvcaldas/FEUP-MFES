@@ -18,9 +18,9 @@ operations
 		getJobOffers()  ==
 		return jobOffers;
 		
---	public getMatchingOffersForUser: User  ==> () 
---		getMatchingOffersForUser(u) ==
---		User.getMatchOffers(jobOffers);		
+	public getMatchingOffersForUser: User  ==> set of JobOffer
+		getMatchingOffersForUser(u) ==
+		return u.getMatchingOffers(jobOffers);
     			
  	public addUser :User ==> ()
 		addUser(u) == 
