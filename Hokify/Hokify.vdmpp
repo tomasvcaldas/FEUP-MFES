@@ -1,0 +1,54 @@
+class Hokify
+types
+-- TODO Define types here
+values
+
+	
+instance variables
+		users: set of User := {};
+		jobOffers: set of JobOffer := {};
+operations
+	
+	
+ 	pure public getUsers: () ==> set of User
+		getUsers() ==
+ 		return users;
+		
+	pure public getJobOffers: () ==> set of JobOffer
+		getJobOffers()  ==
+		return jobOffers;
+		
+--	public getMatchingOffersForUser: User  ==> () 
+--		getMatchingOffersForUser(u) ==
+--		User.getMatchOffers(jobOffers);		
+    			
+ 	public addUser :User ==> ()
+		addUser(u) == 
+		users := users union {u}
+			pre u not in set users
+  		post u in set users;
+				
+				
+	public removeUser : User ==> ()
+		removeUser(u) ==
+		users := users \ {u}
+			pre u  in set users
+    	post u not in set users;
+
+ 	public addJobOffer :JobOffer==> ()
+		addJobOffer(j) == 
+		jobOffers := jobOffers union {j}
+			pre j not in set jobOffers
+  		post j in set jobOffers;
+				
+				
+	public removeJobOffer: JobOffer ==> ()
+		removeJobOffer(j) ==
+		jobOffers := jobOffers \ {j}
+			pre j  in set jobOffers
+    	post j not in set jobOffers;
+functions
+-- TODO Define functiones here
+traces
+-- TODO Define Combinatorial Test Traces here
+end Hokify
