@@ -13,6 +13,9 @@ types
 values
 -- TODO Define values here
 instance variables
+	firstName :  seq of char;
+	lastName : seq of char;
+	email: seq of char;
 	hobbies : set of seq of char ;
 	skills : set of seq of char;
 	workExperience:	set of Job := {};
@@ -20,15 +23,16 @@ instance variables
 		
 operations
 
-public CV: set of seq of char * set of seq of char * set of Job  ==> CV
-CV(h,s,we) == (
-				hobbies := h;
-				skills := s;
-				workExperience := we;
-				
-)
-
-	post hobbies = h and skills = s and workExperience = we;
+			public CV: seq of char * seq of char * seq of char  ==> CV
+				CV(fName,lName,e) == (
+					workExperience := {};
+					skills := {};
+					hobbies := {};
+					firstName := fName;
+					lastName := lName;
+					email := e;
+			);		
+			
 
 			pure public getHobbies: () ==> set of seq of char
 				getHobbies()  ==

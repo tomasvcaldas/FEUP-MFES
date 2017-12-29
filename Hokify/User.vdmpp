@@ -22,7 +22,11 @@ User(fName,lName,e,p) == (
 )
 		post firstName = fName and lastName = lName and email = e and phonenumber = p and curriculumVitae = undefined;
 
-			
+			public createCV : () ==> ()
+				createCV() ==
+				curriculumVitae := new CV(firstName, lastName,email);
+				
+				
 			pure public getFirstName: () ==> seq of char
 				getFirstName() ==
  				 return firstName;
