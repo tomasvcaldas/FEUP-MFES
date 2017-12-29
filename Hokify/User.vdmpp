@@ -10,6 +10,7 @@ instance variables
 		phonenumber: seq of nat;
 		curriculumVitae : CV;
 		jobOffer: set of JobOffer := {};
+	
 		
 operations
 
@@ -30,14 +31,16 @@ User(fName,lName,e,p) == (
 				createCV() ==
 				curriculumVitae := new CV(firstName, lastName,email);
 				
+		
 			
---			public fitForJob : Job ==> ()
---				fitForJob(job) ==
---				card (curriculumVitae.skills inter jobOffer.neededSkills) / card jobOffer.neededSkills;
---			
---			public getMatchingOffers: set of JobOffer  ==> () 
---				getMatchingOffers(jobOffers) ==
---				{offer in jobOffers | fitForJob(offer)};
+			public getMatchingOffers: set of JobOffer ==> set of JobOffer 
+				getMatchingOffers(offers) ==
+				(dcl validJobs : set of JobOffer := {};
+				for all offer in set offers do
+					if card (curriculumVitae.getSkills() inter offer.getNeededSkills()) / card offer.getNeededSkills() > 0.5
+					then validJobs := validJobs union {offer};
+				return validJobs
+				);
 					
 
 			pure public getFirstName: () ==> seq of char
@@ -59,7 +62,9 @@ User(fName,lName,e,p) == (
 			pure public getCV: () ==> CV
 				getCV()  ==
 				return curriculumVitae;
+	
 
+				
 			public addJob : Job ==> ()
 				addJob(j) == 
 				curriculumVitae.addJob(j);
