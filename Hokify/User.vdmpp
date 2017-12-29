@@ -20,7 +20,7 @@ User(fName,lName,e,p) == (
 				email := e;
 				phonenumber := p;
 				curriculumVitae := undefined;
-				Hokify.addUser(self);
+				
 				
 				
 )
