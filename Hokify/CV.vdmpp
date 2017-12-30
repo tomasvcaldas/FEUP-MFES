@@ -60,14 +60,14 @@ operations
     			post j not in set workExperience;
     
     			
- 			public addHobbies : seq of char ==> ()
-				addHobbies(h) == 
+ 			public addHobbie : seq of char ==> ()
+				addHobbie(h) == 
 				hobbies := hobbies union {h}
 					pre h not in set hobbies
     			post h in set hobbies;
 				
- 			public removeHobbies : seq of char ==> ()
-				removeHobbies(h) == 
+ 			public removeHobbie : seq of char ==> ()
+				removeHobbie(h) == 
 				hobbies := hobbies \ {h}
 					pre h  in set hobbies
     			post h not in set hobbies;

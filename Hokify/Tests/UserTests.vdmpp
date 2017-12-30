@@ -1,0 +1,69 @@
+class UserTests
+types
+-- TODO Define types here
+values
+-- TODO Define values here
+instance variables
+	user: User;
+	job: Job;
+operations
+		protected assert : bool ==> ()
+			assert(a) == return 
+			pre a;
+	
+  
+	
+		public testUserParams: User ==> ()
+			testUserParams(u) ==
+			(
+				assert(u.getFirstName() = "Tomas");
+				assert(u.getLastName() = "Caldas");
+				assert(u.getEmail() = "tomasvcaldas@gmail.com");
+				assert(u.getPhoneNumber() = 925302024);
+				
+			);
+			
+		public testUserCV: User ==> ()
+			testUserCV(u) ==
+			(
+				u.createCV();
+				assert(card(u.getCV().getHobbies()) = 0);
+				assert(card(u.getCV().getSkills()) = 0);
+				assert(card(u.getCV().getWorkExperience()) = 0);
+				
+				job := new Job("Google","CEO");
+				assert(job.getCompany() = "Google");
+				assert(job.getPosition() = "CEO");
+				u.addJob(job);
+				assert(job in set u.getCV().getWorkExperience());
+				u.removeJob(job);
+				assert(job not in set u.getCV().getWorkExperience());
+				
+				u.addHobbie("Drawing");
+				assert("Drawing" in set u.getCV().getHobbies());
+				u.removeHobbie("Drawing");
+				assert("Drawing" not in set u.getCV().getHobbies());
+				
+				u.addSkill("Java");
+				assert("Java" in set u.getCV().getSkills());
+				u.removeSkill("Java");
+				assert("Java" not in set u.getCV().getSkills());				
+			);
+	
+		
+
+		
+		
+	public test: () ==> ()
+		test() ==
+		(
+			user := new User("Tomas","Caldas","tomasvcaldas@gmail.com",925302024);
+			testUserParams(user);
+			testUserCV(user);
+		);
+			
+functions
+-- TODO Define functiones here
+traces
+-- TODO Define Combinatorial Test Traces here
+end UserTests
