@@ -30,13 +30,6 @@ Job(c,p) == (
 					getPosition()  ==
 					return position;				
 
-				public setPosition: seq of char ==> ()
-					setPosition(p)  ==
-						position := p;
-					
-				public setCompany: seq of char ==> ()
-					setCompany(c)  ==
-						company := c;
 						
 
 

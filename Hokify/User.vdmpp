@@ -7,25 +7,20 @@ instance variables
 		firstName: seq of char;
 		lastName: seq of char;
 		email: seq of char;
-		phonenumber: seq of nat;
+		phonenumber: nat;
 		curriculumVitae : CV;
 		jobOffer: set of JobOffer := {};
 	
 		
 operations
 
-public User: seq of char * seq of char * seq of char * seq of nat  ==> User
+public User: seq of char * seq of char * seq of char * nat  ==> User
 User(fName,lName,e,p) == (
 				firstName := fName;
 				lastName := lName;
 				email := e;
-				phonenumber := p;
-				curriculumVitae := undefined;
-				
-				
-				
-)
-		post firstName = fName and lastName = lName and email = e and phonenumber = p and curriculumVitae = undefined;
+				phonenumber := p;	
+);
 
 			public createCV : () ==> ()
 				createCV() ==
@@ -55,7 +50,7 @@ User(fName,lName,e,p) == (
 				getEmail()  ==
 				return email;
 				
-			pure public getPhoneNumber: () ==> seq of nat
+			pure public getPhoneNumber: () ==> nat
 				getPhoneNumber()  ==
 				return phonenumber;
 										
@@ -81,13 +76,13 @@ User(fName,lName,e,p) == (
 				removeSkill(s) ==
 				curriculumVitae.removeSkill(s);		
 
-			public addHobbies : seq of char ==> ()
-				addHobbies(h) == 
-				curriculumVitae.addHobbies(h);
+			public addHobbie : seq of char ==> ()
+				addHobbie(h) == 
+				curriculumVitae.addHobbie(h);
 				
-			public removeHobbies : seq of char ==> ()
-				removeHobbies(h) ==
-				curriculumVitae.removeHobbies(h);		
+			public removeHobbie : seq of char ==> ()
+				removeHobbie(h) ==
+				curriculumVitae.removeHobbie(h);		
 				
 						
 functions
