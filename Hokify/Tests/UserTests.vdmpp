@@ -29,28 +29,36 @@ operations
 				dcl pastJob : PastJob := new PastJob("Google","CEO", mk_Job`Date(2007, 03, 12), mk_Job`Date(2007, 09, 12));
 				
 				u.createCV();
-				assert(card(u.getCV().getHobbies()) = 0);
-				assert(card(u.getCV().getSkills()) = 0);
-				assert(card(u.getCV().getWorkExperience()) = 0);
+				assert(u.getCV().getHobbies() = {});
+				assert(u.getCV().getSkills() = {});
+				assert(u.getCV().getWorkExperience() = {});
 				
 				assert(pastJob.getCompany() = "Google");
 				assert(pastJob.getPosition() = "CEO");
 				assert(pastJob.getStartDate() = mk_Job`Date(2007, 03, 12));
 				assert(pastJob.getEndDate() =  mk_Job`Date(2007, 09, 12));
 				u.addPastJob(pastJob);
-				assert(pastJob in set u.getCV().getWorkExperience());
+				assert(u.getCV().getWorkExperience() = {pastJob});
 				u.removePastJob(pastJob);
-				assert(pastJob not in set u.getCV().getWorkExperience());
+				assert(u.getCV().getWorkExperience() = {});
 				
 				u.addHobbie("Drawing");
-				assert("Drawing" in set u.getCV().getHobbies());
+				assert(u.getCV().getHobbies() = {"Drawing"});
+				u.addHobbie("Painting");
+				assert(u.getCV().getHobbies() = {"Drawing", "Painting"});
+				u.removeHobbie("Painting");
+				assert(u.getCV().getHobbies() = {"Drawing"});
 				u.removeHobbie("Drawing");
-				assert("Drawing" not in set u.getCV().getHobbies());
+				assert(u.getCV().getHobbies() = {});
 				
 				u.addSkill("Java");
-				assert("Java" in set u.getCV().getSkills());
+				assert(u.getCV().getSkills() = {"Java"});
+				u.addSkill("C#");
+				assert(u.getCV().getSkills() = {"Java", "C#"});
 				u.removeSkill("Java");
-				assert("Java" not in set u.getCV().getSkills());				
+				assert(u.getCV().getSkills() = {"C#"});
+				u.removeSkill("C#");	
+				assert(u.getCV().getSkills() = {});			
 			);
 	
 		
