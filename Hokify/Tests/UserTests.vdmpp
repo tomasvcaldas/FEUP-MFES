@@ -4,8 +4,6 @@ types
 values
 -- TODO Define values here
 instance variables
-	user: User;
-	job: Job;
 operations
 		protected assert : bool ==> ()
 			assert(a) == return 
@@ -13,9 +11,10 @@ operations
 	
   
 	
-		public testUserParams: User ==> ()
-			testUserParams(u) ==
+		private testUserParams: () ==> ()
+			testUserParams() ==
 			(
+				dcl u : User := new User("Tomas","Caldas","tomasvcaldas@gmail.com",925302024);
 				assert(u.getFirstName() = "Tomas");
 				assert(u.getLastName() = "Caldas");
 				assert(u.getEmail() = "tomasvcaldas@gmail.com");
@@ -23,21 +22,25 @@ operations
 				
 			);
 			
-		public testUserCV: User ==> ()
-			testUserCV(u) ==
+		private testUserCV: () ==> ()
+			testUserCV() ==
 			(
+				dcl u : User := new User("Tomas","Caldas","tomasvcaldas@gmail.com",925302024);
+				dcl pastJob : PastJob := new PastJob("Google","CEO", mk_Job`Date(2007, 03, 12), mk_Job`Date(2007, 09, 12));
+				
 				u.createCV();
 				assert(card(u.getCV().getHobbies()) = 0);
 				assert(card(u.getCV().getSkills()) = 0);
 				assert(card(u.getCV().getWorkExperience()) = 0);
 				
-				job := new Job("Google","CEO");
-				assert(job.getCompany() = "Google");
-				assert(job.getPosition() = "CEO");
-				u.addJob(job);
-				assert(job in set u.getCV().getWorkExperience());
-				u.removeJob(job);
-				assert(job not in set u.getCV().getWorkExperience());
+				assert(pastJob.getCompany() = "Google");
+				assert(pastJob.getPosition() = "CEO");
+				assert(pastJob.getStartDate() = mk_Job`Date(2007, 03, 12));
+				assert(pastJob.getEndDate() =  mk_Job`Date(2007, 09, 12));
+				u.addPastJob(pastJob);
+				assert(pastJob in set u.getCV().getWorkExperience());
+				u.removePastJob(pastJob);
+				assert(pastJob not in set u.getCV().getWorkExperience());
 				
 				u.addHobbie("Drawing");
 				assert("Drawing" in set u.getCV().getHobbies());
@@ -54,12 +57,11 @@ operations
 
 		
 		
-	public test: () ==> ()
-		test() ==
+	public runTests: () ==> ()
+		runTests() ==
 		(
-			user := new User("Tomas","Caldas","tomasvcaldas@gmail.com",925302024);
-			testUserParams(user);
-			testUserCV(user);
+			testUserParams();
+			testUserCV();
 		);
 			
 functions
