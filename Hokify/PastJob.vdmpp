@@ -9,21 +9,34 @@ instance variables
 		endDate: Date;
 		inv validDates(startDate, endDate);
 operations
+public PastJob : seq of char * seq of char * Date * Date ==> PastJob
+PastJob(c,p,sDate,eDate) == (
+				startDate := sDate;
+				endDate := eDate;
+				Job(c, p);
+);
+
+pure public getStartDate: () ==> Date
+        getStartDate()  ==
+        return startDate;
+        
+pure public getEndDate: () ==> Date
+        getEndDate()  ==
+        return endDate;
+        
+public setEndDate: Date ==> ()
+        setEndDate(date) ==
+        endDate := date;
+        
+        	
 -- TODO Define operations here
 functions 
--- TODO Define functiones here
---	private smallerDate() ret: bool == 
---	  d2.year >= d1.year or (d2.year = d1.year and d2.month > d1.month) or 
---			(d2.year = d1.year and d2.month = d1.month and d2.day > d1.day);
 			
-	public validDates : Date * Date -> bool
-	validDates(d1, d2) ==
-		d2 = undefined or d2.year >= d1.year or (d2.year = d1.year and d2.month > d1.month) or 
+public validDates : Date * Date -> bool
+validDates(d1, d2) ==
+		d2.year >= d1.year or (d2.year = d1.year and d2.month > d1.month) or 
 			(d2.year = d1.year and d2.month = d1.month and d2.day > d1.day);
-		
-	
-	
-	
+
 traces
 -- TODO Define Combinatorial Test Traces here
 end PastJob

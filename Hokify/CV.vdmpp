@@ -5,7 +5,7 @@ types
 		public education = <HighSchool> | <FineSecondarySchool> | <Teaching> | <MandatorySchool> | <UniversityCollege> ;
 		
 		public drivingLicense = <A> | <B> | <C> | <D>;
-		
+	
 		
 		
 		
@@ -17,7 +17,7 @@ instance variables
 	email: seq of char;
 	hobbies : set of seq of char ;
 	skills : set of seq of char;
-	workExperience:	set of Job := {};
+	workExperience:	set of PastJob := {};
 	
 		
 operations
@@ -46,14 +46,14 @@ operations
 				return workExperience;	
 	
 	
-			public addJob : Job ==> ()
-				addJob(j) == 
+			public addPastJob : PastJob ==> ()
+				addPastJob(j) == 
 				workExperience := workExperience union {j}
 					pre j not in set workExperience
     			post j in set workExperience;
 				
- 			public removeJob : Job ==> ()
-				removeJob(j) == 
+ 			public removePastJob : PastJob ==> ()
+				removePastJob(j) == 
 				workExperience := workExperience \ {j}
 					pre j  in set workExperience
     			post j not in set workExperience;

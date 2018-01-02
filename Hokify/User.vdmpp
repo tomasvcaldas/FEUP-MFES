@@ -60,13 +60,13 @@ User(fName,lName,e,p) == (
 	
 
 				
-			public addJob : Job ==> ()
-				addJob(j) == 
-				curriculumVitae.addJob(j);
+			public addPastJob : PastJob ==> ()
+				addPastJob(j) == 
+				curriculumVitae.addPastJob(j);
 				
-			public removeJob : Job ==> ()
-				removeJob(j) ==
-				curriculumVitae.removeJob(j);
+			public removePastJob : PastJob ==> ()
+				removePastJob(j) ==
+				curriculumVitae.removePastJob(j);
 
 			public addSkill : seq of char ==> ()
 				addSkill(s) == 
