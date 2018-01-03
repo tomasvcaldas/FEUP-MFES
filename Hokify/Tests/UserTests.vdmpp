@@ -1,21 +1,15 @@
-class UserTests
+class UserTests is subclass of Tests
 types
 -- TODO Define types here
 values
 -- TODO Define values here
 instance variables
-	user: User;
-	job: Job;
 operations
-		protected assert : bool ==> ()
-			assert(a) == return 
-			pre a;
 	
-  
-	
-		public testUserParams: User ==> ()
-			testUserParams(u) ==
+		private testUserParams: () ==> ()
+			testUserParams() ==
 			(
+				dcl u : User := new User("Tomas","Caldas","tomasvcaldas@gmail.com",925302024);
 				assert(u.getFirstName() = "Tomas");
 				assert(u.getLastName() = "Caldas");
 				assert(u.getEmail() = "tomasvcaldas@gmail.com");
@@ -23,43 +17,71 @@ operations
 				
 			);
 			
-		public testUserCV: User ==> ()
-			testUserCV(u) ==
+		private testUserCV: () ==> ()
+			testUserCV() ==
 			(
-				u.createCV();
-				assert(card(u.getCV().getHobbies()) = 0);
-				assert(card(u.getCV().getSkills()) = 0);
-				assert(card(u.getCV().getWorkExperience()) = 0);
+				dcl u : User := new User("Tomas","Caldas","tomasvcaldas@gmail.com",925302024);
+				dcl googleJob : PastJob := new PastJob("Google","CEO", mk_Job`Date(2007, 03, 12), mk_Job`Date(2007, 09, 12));
+				dcl facebookJob : PastJob := new PastJob("Facebook","Tester", mk_Job`Date(2008, 03, 12), mk_Job`Date(2008, 03, 31));
 				
-				job := new Job("Google","CEO");
-				assert(job.getCompany() = "Google");
-				assert(job.getPosition() = "CEO");
-				u.addJob(job);
-				assert(job in set u.getCV().getWorkExperience());
-				u.removeJob(job);
-				assert(job not in set u.getCV().getWorkExperience());
+				u.createCV();
+				assert(u.getCV().getHobbies() = {});
+				assert(u.getCV().getSkills() = {});
+				assert(u.getCV().getWorkExperience() = {});
+				
+				assert(googleJob.getCompany() = "Google");
+				assert(googleJob.getPosition() = "CEO");
+				assert(googleJob.getStartDate() = mk_Job`Date(2007, 03, 12));
+				assert(googleJob.getEndDate() =  mk_Job`Date(2007, 09, 12));
+				
+				assert(facebookJob.getCompany() = "Facebook");
+				assert(facebookJob.getPosition() = "Tester");
+				assert(facebookJob.getStartDate() = mk_Job`Date(2008, 03, 12));
+				assert(facebookJob.getEndDate() =  mk_Job`Date(2008, 03, 31));
+				
+				u.addPastJob(googleJob);
+				assert(u.getCV().getWorkExperience() = {googleJob});
+				u.addPastJob(facebookJob);
+				assert(u.getCV().getWorkExperience() = {googleJob, facebookJob});
+				u.removePastJob(googleJob);
+				assert(u.getCV().getWorkExperience() = {facebookJob});
+				u.removePastJob(facebookJob);
+				assert(u.getCV().getWorkExperience() = {});
 				
 				u.addHobbie("Drawing");
-				assert("Drawing" in set u.getCV().getHobbies());
+				assert(u.getCV().getHobbies() = {"Drawing"});
+				u.addHobbie("Painting");
+				assert(u.getCV().getHobbies() = {"Drawing", "Painting"});
+				u.removeHobbie("Painting");
+				assert(u.getCV().getHobbies() = {"Drawing"});
 				u.removeHobbie("Drawing");
-				assert("Drawing" not in set u.getCV().getHobbies());
+				assert(u.getCV().getHobbies() = {});
 				
 				u.addSkill("Java");
-				assert("Java" in set u.getCV().getSkills());
+				assert(u.getCV().getSkills() = {"Java"});
+				u.addSkill("C#");
+				assert(u.getCV().getSkills() = {"Java", "C#"});
 				u.removeSkill("Java");
-				assert("Java" not in set u.getCV().getSkills());				
+				assert(u.getCV().getSkills() = {"C#"});
+				u.removeSkill("C#");	
+				assert(u.getCV().getSkills() = {});			
+				
+				u.setDriversLicense(<C>);
+				assert(u.getCV().getDriversLicense() = <C>);
+				
+				u.addEducation(<UniversityCollege>);
+				assert(u.getCV().getEducation() = {<UniversityCollege>});
 			);
 	
 		
 
 		
 		
-	public test: () ==> ()
-		test() ==
+	public runTests: () ==> ()
+		runTests() ==
 		(
-			user := new User("Tomas","Caldas","tomasvcaldas@gmail.com",925302024);
-			testUserParams(user);
-			testUserCV(user);
+			testUserParams();
+			testUserCV();
 		);
 			
 functions

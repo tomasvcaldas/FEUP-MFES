@@ -3,7 +3,13 @@ types
 								 
 	public Date :: year : nat1
 								 month: nat1
-								 day : nat1;
+								 day : nat1
+	inv d == 
+		if d.year mod 400 = 0 or (d.year mod 100 <> 0 and d.year mod 4 <> 0)
+				then d.month < 12 and d.day <= [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31](d.month)
+				else d.month < 12 and d.day <= [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31](d.month);
+
+
 
 values
 -- TODO Define values here
@@ -30,14 +36,5 @@ Job(c,p) == (
 					getPosition()  ==
 					return position;				
 
-						
 
-
-		
-
-		
-functions
--- TODO Define functiones here
-traces
--- TODO Define Combinatorial Test Traces here
 end Job

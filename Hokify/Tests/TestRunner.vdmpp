@@ -1,0 +1,24 @@
+class TestRunner
+types
+-- TODO Define types here
+values
+-- TODO Define values here
+instance variables
+-- TODO Define instance variables here
+operations
+-- TODO Define operations here
+public static runTests : () ==> ()
+	runTests() ==
+	(
+			dcl userTester : UserTests := new UserTests();
+			dcl jobOfferTester : JobOfferTests := new JobOfferTests();
+			dcl hokifyTester : HokifyTests := new HokifyTests();
+			userTester.runTests();
+			jobOfferTester.runTests();
+			hokifyTester.runTests();
+	);
+functions
+-- TODO Define functiones here
+traces
+-- TODO Define Combinatorial Test Traces here
+end TestRunner

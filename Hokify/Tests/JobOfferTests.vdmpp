@@ -1,0 +1,55 @@
+class JobOfferTests is subclass of Tests
+types
+-- TODO Define types here
+values
+-- TODO Define values here
+instance variables
+-- TODO Define instance variables here
+operations
+	
+	private testJobOfferParams : () ==> ()
+	testJobOfferParams() ==
+	(
+				dcl allEducations : set of CV`Education := {<HighSchool>, <FineSecondarySchool>, <Teaching>, <MandatorySchool>, <UniversityCollege>};
+			  dcl jobOffer : JobOffer := new JobOffer("Google", "CTO", 1, {}, allEducations, <C>);
+			  
+			  assert(jobOffer.getCompany() = "Google");
+			  assert(jobOffer.getPosition() = "CTO");
+			  assert(jobOffer.getOpenPositions() = 1);
+			  assert(jobOffer.getNeededSkills() = {});
+			  assert(jobOffer.getRequiredEducation() = allEducations);
+			  assert(jobOffer.getRequiredDriversLicense() = <C>);
+			  
+	);
+	
+	private testAppliances : () ==> ()
+	testAppliances() == 
+	(
+			dcl allEducations : set of CV`Education := {<HighSchool>, <FineSecondarySchool>, <Teaching>, <MandatorySchool>, <UniversityCollege>};
+			dcl jobOffer : JobOffer := new JobOffer("Google", "CTO", 1, {}, allEducations, <C>);
+			dcl andre : User := new User("Andre", "Reis", "andre@gmail.com", 917777777);
+			dcl tomas : User := new User("Tomas", "Caldas", "tomas@gmail.com", 919999999);
+			
+			assert(jobOffer.getAppliances() = {});
+			jobOffer.addAppliance(andre);
+			assert(jobOffer.getAppliances() = {andre});
+			jobOffer.addAppliance(tomas);
+			assert(jobOffer.getAppliances() = {andre, tomas});
+			jobOffer.removeAppliance(andre);
+			assert(jobOffer.getAppliances() = {tomas});
+			
+	);
+	
+	public runTests : () ==> ()
+	runTests() ==
+	(
+			testJobOfferParams();
+			testAppliances();
+	);
+				
+-- TODO Define operations here
+functions
+-- TODO Define functiones here
+traces
+-- TODO Define Combinatorial Test Traces here
+end JobOfferTests
