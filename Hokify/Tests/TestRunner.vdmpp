@@ -9,7 +9,7 @@ operations
 -- TODO Define operations here
 public static runTests : () ==> ()
 	runTests() ==
-	(
+	( 	--runs all the tests
 			dcl userTester : UserTests := new UserTests();
 			dcl jobOfferTester : JobOfferTests := new JobOfferTests();
 			dcl hokifyTester : HokifyTests := new HokifyTests();

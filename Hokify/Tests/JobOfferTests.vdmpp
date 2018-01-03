@@ -6,7 +6,7 @@ values
 instance variables
 -- TODO Define instance variables here
 operations
-	
+	--Create a job offer and verifies if the variables match to the offer created
 	private testJobOfferParams : () ==> ()
 	testJobOfferParams() ==
 	(
@@ -21,10 +21,10 @@ operations
 			  assert(jobOffer.getRequiredDriversLicense() = <C>);
 			  
 	);
-	
+	--verifies the appliances of a job offer while adding and removing some 
 	private testAppliances : () ==> ()
 	testAppliances() == 
-	(
+	( 
 			dcl allEducations : set of CV`Education := {<HighSchool>, <FineSecondarySchool>, <Teaching>, <MandatorySchool>, <UniversityCollege>};
 			dcl jobOffer : JobOffer := new JobOffer("Google", "CTO", 1, {}, allEducations, <C>);
 			dcl andre : User := new User("Andre", "Reis", "andre@gmail.com", 917777777);
@@ -39,7 +39,7 @@ operations
 			assert(jobOffer.getAppliances() = {tomas});
 			
 	);
-	
+	--runs the above tests
 	public runTests : () ==> ()
 	runTests() ==
 	(

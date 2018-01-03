@@ -13,7 +13,7 @@ operations
 -- TODO Define operations here
 private testHokify : () ==> ()
 testHokify() ==
-(
+(		--verifies if an empty hokify class has no users and no job offers
 		dcl hokify : Hokify := new Hokify();
 		
 		assert(hokify.getUsers() = {});
@@ -23,7 +23,7 @@ testHokify() ==
 private testUsers : () ==> ()
 testUsers() ==
 (
-		
+		--creates an empty hokify class, adds and removes two users and checks if it was done correctly
 		dcl hokify : Hokify := new Hokify();
 		
 		hokify.addUser(andre);
@@ -40,7 +40,7 @@ testUsers() ==
 private testJobOffers : () ==> ()
 testJobOffers() ==
 (
-		
+		--creates an empty hokify class, adds and removes two job offers and checks if it was done correctly
 		dcl hokify : Hokify := new Hokify();
 		
 		hokify.addJobOffer(googleOffer);
@@ -57,7 +57,7 @@ testJobOffers() ==
 private testMatching : () ==> ()
 testMatching() ==
 (
-		
+		--creates an empty hokify class, two users with driver license and education and checks the matching offers for those users while adding different skills and education.
 		dcl hokify : Hokify := new Hokify();
 		
 		andre.createCV();
@@ -90,7 +90,7 @@ testMatching() ==
 
 private testAppliance : () ==> ()
 testAppliance() ==
-(
+(		--creates a new empty hokify class, makes appliances for a job offer, accepts one and declines the other
 		dcl hokify : Hokify := new Hokify();
 		dcl googleOpenPos : nat := googleOffer.getOpenPositions();
 
@@ -117,7 +117,7 @@ testAppliance() ==
 		assert(googleOffer.getAppliances() = {});
 		assert(tomas.getAppliances() = {});
 );
-
+--runs the above tests
 public runTests : () ==> ()
 runTests() ==
 (
