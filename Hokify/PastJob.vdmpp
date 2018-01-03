@@ -9,17 +9,18 @@ instance variables
 		endDate: Date;
 		inv validDates(startDate, endDate);
 operations
+--Past Job constructor, initializes the variables
 public PastJob : seq of char * seq of char * Date * [Date] ==> PastJob
 PastJob(c,p,sDate,eDate) == (
 				startDate := sDate;
 				endDate := eDate;
 				Job(c, p);
 );
-
+--Returns the start date of a past job
 pure public getStartDate: () ==> Date
         getStartDate()  ==
         return startDate;
-        
+--Returns the end date of a past job        
 pure public getEndDate: () ==> Date
         getEndDate()  ==
         return endDate;
@@ -27,12 +28,12 @@ pure public getEndDate: () ==> Date
         	
 -- TODO Define operations here
 functions 
-			
+--Verifies if a date is valid			
 public validDates : Date * [Date] -> bool
 validDates(d1, d2) ==
 		d2 = nil or (d2.year > d1.year or (d2.year = d1.year and d2.month > d1.month) or 
 			(d2.year = d1.year and d2.month = d1.month and d2.day > d1.day));
-			
+--Verifies if two past jobs are equal			
 public equals : PastJob * PastJob -> bool
 equals(j1, j2) ==
 		j1.startDate = j2.startDate and j1.endDate = j2.endDate and

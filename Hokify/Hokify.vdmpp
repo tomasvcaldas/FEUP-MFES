@@ -9,32 +9,32 @@ instance variables
 		jobOffers: set of JobOffer := {};
 operations
 	
-	
+--Returns all the users in Hokify	
  	pure public getUsers: () ==> set of User
 		getUsers() ==
  		return users;
-		
+--Returns all the job offers in Hokify		
 	pure public getJobOffers: () ==> set of JobOffer
 		getJobOffers()  ==
 		return jobOffers;
-		
+--Returns all the matching job offers for a user		
 	public getMatchingOffersForUser: User  ==> set of JobOffer
 		getMatchingOffersForUser(u) ==
 		return u.getMatchingOffers(jobOffers)
 			pre exists user in set users & User`equals(user, u);
-			
+--Returns all the matching users for an offer			
 	public getMatchingUsersForOffer: JobOffer  ==> set of User
 		getMatchingUsersForOffer(job) ==
 		return job.getMatchingOffers(users)
 			pre exists j in set jobOffers & JobOffer`equals(j, job);
-    			
+--Adds user to Hokify 			
  	public addUser :User ==> ()
 		addUser(u) == 
 		users := users union {u}
 			pre not exists user in set users & User`equals(user, u)
   		post u in set users;
 				
-				
+--Removes user from Hokify				
 	public removeUser : User ==> ()
 		removeUser(u) ==
 		(
@@ -44,14 +44,14 @@ operations
 		)
 			pre exists user in set users & User`equals(user, u)
     	post not exists user in set users & User`equals(user, u);
-
+--Adds a job offer to job offers
  	public addJobOffer :JobOffer==> ()
 		addJobOffer(j) == 
 		jobOffers := jobOffers union {j}
 			pre not exists job in set jobOffers & JobOffer`equals(job, j)
   		post j in set jobOffers;
 				
-				
+--Removes job offer from job offers				
 	public removeJobOffer: JobOffer ==> ()
 		removeJobOffer(j) ==
 		(
@@ -61,15 +61,15 @@ operations
 		)
 			pre exists job in set jobOffers & JobOffer`equals(job, j)
     	post not exists job in set jobOffers & JobOffer`equals(job, j);
-    	
+--Adds an appliance from an user to a job offer    	
    public addAppliance : User * JobOffer ==> ()
    addAppliance(u, j) ==
    		u.applyForJob(j);
-   
+--Accepts the appliance of an user to a job  
    public acceptAppliance : User * JobOffer ==> ()
    acceptAppliance(u, j) ==
    		j.acceptAppliance(u);
-   		
+--Declines the appliance of an user to a job   		
    public declineAppliance : User * JobOffer ==> ()
    declineAppliance(u, j) ==
    		j.declineAppliance(u);

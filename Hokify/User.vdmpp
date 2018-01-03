@@ -12,7 +12,7 @@ instance variables
 		appliances: set of JobOffer; 
 		
 operations
-
+--User constructor, initializes the user variables.
 public User: seq of char * seq of char * seq of char * nat  ==> User
 User(fName,lName,e,p) == (
 				firstName := fName;
@@ -21,17 +21,18 @@ User(fName,lName,e,p) == (
 				phonenumber := p;
 				appliances := {};
 );
-
+--Creates a CV for the user with its first name, last name, email, no license and empty education array.
 			public createCV : () ==> ()
 				createCV() ==
 				curriculumVitae := new CV(firstName, lastName,email, nil, {});
-				
+--Verifies if the job offer matches the skills, driving license and education of the user CV.				
 			public offerMatches : JobOffer ==> bool
 			offerMatches(offer) ==
 			return (offer.getRequiredDriversLicense() = nil or curriculumVitae.getDriversLicense() = offer.getRequiredDriversLicense()) and
 			(offer.getRequiredEducation() = {} or offer.getRequiredEducation() inter curriculumVitae.getEducation() <> {}) and
 			(offer.getNeededSkills() = {} or card (curriculumVitae.getSkills() inter offer.getNeededSkills()) / card offer.getNeededSkills() > 0.5);
 			
+--Returns the offers that match the set of skills, education and driving license of the user
 			public getMatchingOffers: set of JobOffer ==> set of JobOffer 
 				getMatchingOffers(offers) ==
 				(dcl validJobs : set of JobOffer := {};
@@ -42,70 +43,70 @@ User(fName,lName,e,p) == (
 				)
 				pre curriculumVitae <> nil;
 					
-
+--Returns the user first name
 			pure public getFirstName: () ==> seq of char
 				getFirstName() ==
  				 return firstName;
-		
+--Returns the user last name		
 			pure public getLastName: () ==> seq of char
 				getLastName()  ==
 				return lastName;
-				
+--Returns the user email				
 			pure public getEmail: () ==> seq of char
 				getEmail()  ==
 				return email;
-				
+--Rerturns the user phone number				
 			pure public getPhoneNumber: () ==> nat
 				getPhoneNumber()  ==
 				return phonenumber;
-										
+--Returns the user CV										
 			pure public getCV: () ==> [CV]
 				getCV()  ==
 				return curriculumVitae;
-	
+--Calls CV operation to add job to past jobs
 			public addPastJob : PastJob ==> ()
 				addPastJob(j) == 
 				curriculumVitae.addPastJob(j)
 				pre curriculumVitae <> nil and 
 				not exists job in set curriculumVitae.getWorkExperience() &
 				PastJob`equals(job, j);
-				
+--Calls CV operation to remove past job past jobs				
 			public removePastJob : PastJob ==> ()
 				removePastJob(j) ==
 				curriculumVitae.removePastJob(j)
 				pre curriculumVitae <> nil and 
 				exists job in set curriculumVitae.getWorkExperience() &
 				PastJob`equals(job, j);
-
+--Calls CV operation to add skill to skills
 			public addSkill : seq of char ==> ()
 				addSkill(s) == 
 				curriculumVitae.addSkill(s);
-				
+--Calls CV operation to remove skill from skills		
 			public removeSkill : seq of char ==> ()
 				removeSkill(s) ==
 				curriculumVitae.removeSkill(s);		
-
+--Calls CV operation to add hobby to hobbies
 			public addHobbie : seq of char ==> ()
 				addHobbie(h) == 
 				curriculumVitae.addHobbie(h);
-				
+--Calls CV operation to remove hobby from hobbies		
 			public removeHobbie : seq of char ==> ()
 				removeHobbie(h) ==
 				curriculumVitae.removeHobbie(h);		
-				
+--Adds a job to the set of jobs he is applying to				
 			public applyForJob : JobOffer ==> ()
 			applyForJob(j) ==
 			(
 				appliances := appliances union {j};
 				j.addAppliance(self);
 			);
-			
+--Removes a job that was declined from the jobs he was applying to			
 			public declinedJob : JobOffer ==> ()
 			declinedJob(job) ==
 			(
 				appliances := appliances \ {job};
 			);
-			
+--Removes a job that was accepted from the jobs he was applying to and adds that job to the set of past jobs of that user CV.			
 			public acceptedJob : JobOffer ==> ()
 			acceptedJob(job) ==
 			(
@@ -115,6 +116,7 @@ User(fName,lName,e,p) == (
 						
 functions
 
+--Verifies if two users are the same
 public equals : User * User -> bool
 equals(u1, u2) ==
 		u1.email = u2.email;
