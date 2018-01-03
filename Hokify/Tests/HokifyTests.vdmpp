@@ -109,7 +109,7 @@ testAppliance() ==
 		assert(googleOffer.getAppliances() = {tomas});
 		assert(andre.getAppliances() = {});
 		assert(exists job in set andre.getCV().getWorkExperience() & 
-			PastJob`areEqual(job, new PastJob(googleOffer.getCompany(), googleOffer.getPosition(), mk_Job`Date(2018, 01, 03), nil)));
+			PastJob`equals(job, new PastJob(googleOffer.getCompany(), googleOffer.getPosition(), mk_Job`Date(2018, 01, 03), nil)));
 		googleOpenPos := googleOffer.getOpenPositions();
 		
 		hokify.declineAppliance(tomas, googleOffer);

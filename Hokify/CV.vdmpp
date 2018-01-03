@@ -58,13 +58,13 @@ operations
 			public addPastJob : PastJob ==> ()
 			addPastJob(j) == 
 				workExperience := workExperience union {j}
-					pre not exists job in set workExperience & PastJob`areEqual(job, j)
+					pre not exists job in set workExperience & PastJob`equals(job, j)
     			post j in set workExperience;
 --Removes past job from past jobs				
  			public removePastJob : PastJob ==> ()
 				removePastJob(j) == 
 				workExperience := workExperience \ {j}
-					pre exists job in set workExperience & PastJob`areEqual(job, j)
+					pre exists job in set workExperience & PastJob`equals(job, j)
     			post j not in set workExperience;
     
 --Adds hobby to hobbies    			

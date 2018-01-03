@@ -31,7 +31,7 @@ operations
  	public addUser :User ==> ()
 		addUser(u) == 
 		users := users union {u}
-			pre not exists user in set users & User`areEqual(user, u)
+			pre not exists user in set users & User`equals(user, u)
   		post u in set users;
 				
 --Removes user from Hokify				
@@ -39,7 +39,7 @@ operations
 		removeUser(u) ==
 		(
 			for all user in set users do
-				if User`areEqual(user, u) 
+				if User`equals(user, u) 
 				then users := users \ {user};
 		)
 			pre exists user in set users & User`equals(user, u)
@@ -48,7 +48,7 @@ operations
  	public addJobOffer :JobOffer==> ()
 		addJobOffer(j) == 
 		jobOffers := jobOffers union {j}
-			pre not exists job in set jobOffers & JobOffer`areEqual(job, j)
+			pre not exists job in set jobOffers & JobOffer`equals(job, j)
   		post j in set jobOffers;
 				
 --Removes job offer from job offers				
@@ -56,7 +56,7 @@ operations
 		removeJobOffer(j) ==
 		(
 			for all job in set jobOffers do
-				if JobOffer`areEqual(job, j) 
+				if JobOffer`equals(job, j) 
 				then jobOffers := jobOffers \ {job};
 		)
 			pre exists job in set jobOffers & JobOffer`equals(job, j)
