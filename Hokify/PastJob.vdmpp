@@ -24,17 +24,13 @@ pure public getEndDate: () ==> Date
         getEndDate()  ==
         return endDate;
         
-public setEndDate: Date ==> ()
-        setEndDate(date) ==
-        endDate := date;
-        
         	
 -- TODO Define operations here
 functions 
 			
 public validDates : Date * Date -> bool
 validDates(d1, d2) ==
-		d2.year >= d1.year or (d2.year = d1.year and d2.month > d1.month) or 
+		d2.year > d1.year or (d2.year = d1.year and d2.month > d1.month) or 
 			(d2.year = d1.year and d2.month = d1.month and d2.day > d1.day);
 
 traces

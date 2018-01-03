@@ -1,4 +1,4 @@
-class JobOfferTests
+class JobOfferTests is subclass of Tests
 types
 -- TODO Define types here
 values
@@ -6,9 +6,6 @@ values
 instance variables
 -- TODO Define instance variables here
 operations
-	protected assert : bool ==> ()
-				assert(a) == return 
-				pre a;
 	
 	private testJobOfferParams : () ==> ()
 	testJobOfferParams() ==

@@ -54,6 +54,15 @@ public removeAppliance : User ==> ()
         appliances := appliances \ {user}
         pre user in set appliances
         post user not in set appliances;
+        
+public getMatchingOffers: set of User ==> set of User 
+getMatchingOffers(users) ==
+				(dcl validCandidates : set of User := {};
+				for all user in set users do
+					if card (user.getCV().getSkills() inter neededSkills) / card neededSkills > 0.5
+					then validCandidates := validCandidates union {user};
+				return validCandidates
+				);
 
 functions
 -- TODO Define functiones here

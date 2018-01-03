@@ -19,7 +19,7 @@ User(fName,lName,e,p) == (
 				firstName := fName;
 				lastName := lName;
 				email := e;
-				phonenumber := p;	
+				phonenumber := p;
 );
 
 			public createCV : () ==> ()

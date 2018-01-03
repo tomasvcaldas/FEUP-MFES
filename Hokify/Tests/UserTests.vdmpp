@@ -1,15 +1,10 @@
-class UserTests
+class UserTests is subclass of Tests
 types
 -- TODO Define types here
 values
 -- TODO Define values here
 instance variables
 operations
-		protected assert : bool ==> ()
-			assert(a) == return 
-			pre a;
-	
-  
 	
 		private testUserParams: () ==> ()
 			testUserParams() ==
@@ -26,20 +21,31 @@ operations
 			testUserCV() ==
 			(
 				dcl u : User := new User("Tomas","Caldas","tomasvcaldas@gmail.com",925302024);
-				dcl pastJob : PastJob := new PastJob("Google","CEO", mk_Job`Date(2007, 03, 12), mk_Job`Date(2007, 09, 12));
+				dcl googleJob : PastJob := new PastJob("Google","CEO", mk_Job`Date(2007, 03, 12), mk_Job`Date(2007, 09, 12));
+				dcl facebookJob : PastJob := new PastJob("Facebook","Tester", mk_Job`Date(2007, 03, 12), mk_Job`Date(2007, 03, 31));
 				
 				u.createCV();
 				assert(u.getCV().getHobbies() = {});
 				assert(u.getCV().getSkills() = {});
 				assert(u.getCV().getWorkExperience() = {});
 				
-				assert(pastJob.getCompany() = "Google");
-				assert(pastJob.getPosition() = "CEO");
-				assert(pastJob.getStartDate() = mk_Job`Date(2007, 03, 12));
-				assert(pastJob.getEndDate() =  mk_Job`Date(2007, 09, 12));
-				u.addPastJob(pastJob);
-				assert(u.getCV().getWorkExperience() = {pastJob});
-				u.removePastJob(pastJob);
+				assert(googleJob.getCompany() = "Google");
+				assert(googleJob.getPosition() = "CEO");
+				assert(googleJob.getStartDate() = mk_Job`Date(2007, 03, 12));
+				assert(googleJob.getEndDate() =  mk_Job`Date(2007, 09, 12));
+				
+				assert(facebookJob.getCompany() = "Facebook");
+				assert(facebookJob.getPosition() = "Tester");
+				assert(facebookJob.getStartDate() = mk_Job`Date(2007, 03, 12));
+				assert(facebookJob.getEndDate() =  mk_Job`Date(2007, 03, 31));
+				
+				u.addPastJob(googleJob);
+				assert(u.getCV().getWorkExperience() = {googleJob});
+				u.addPastJob(facebookJob);
+				assert(u.getCV().getWorkExperience() = {googleJob, facebookJob});
+				u.removePastJob(googleJob);
+				assert(u.getCV().getWorkExperience() = {facebookJob});
+				u.removePastJob(facebookJob);
 				assert(u.getCV().getWorkExperience() = {});
 				
 				u.addHobbie("Drawing");

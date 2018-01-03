@@ -1,0 +1,100 @@
+class HokifyTests is subclass of Tests
+types
+-- TODO Define types here
+values
+-- TODO Define values here
+instance variables
+	andre: User := new User("Andre", "Reis", "andre@gmail.com", 917777777);
+	tomas : User := new User("Tomas", "Caldas", "tomas@gmail.com", 919999999);
+	allEducations : set of CV`education := {<HighSchool>, <FineSecondarySchool>, <Teaching>, <MandatorySchool>, <UniversityCollege>};
+	googleOffer : JobOffer := new JobOffer("Google", "CTO", 1, {"Java"}, allEducations, <C>);
+	facebookOffer : JobOffer := new JobOffer("Facebook", "CodeMonkey", 1, {"C"}, allEducations, <C>);
+operations
+-- TODO Define operations here
+private testHokify : () ==> ()
+testHokify() ==
+(
+		dcl hokify : Hokify := new Hokify();
+		
+		assert(hokify.getUsers() = {});
+		assert(hokify.getJobOffers() = {});
+);
+
+private testUsers : () ==> ()
+testUsers() ==
+(
+		
+		dcl hokify : Hokify := new Hokify();
+		
+		hokify.addUser(andre);
+		assert(hokify.getUsers() = {andre});
+		hokify.addUser(tomas);
+		assert(hokify.getUsers() = {andre, tomas});
+		hokify.removeUser(andre);
+		assert(hokify.getUsers() = {tomas});
+		hokify.removeUser(tomas);
+		assert(hokify.getUsers() = {});
+		
+);
+
+private testJobOffers : () ==> ()
+testJobOffers() ==
+(
+		
+		dcl hokify : Hokify := new Hokify();
+		
+		hokify.addJobOffer(googleOffer);
+		assert(hokify.getJobOffers() = {googleOffer});
+		hokify.addJobOffer(facebookOffer);
+		assert(hokify.getJobOffers() = {facebookOffer, googleOffer});
+		hokify.removeJobOffer(facebookOffer);
+		assert(hokify.getJobOffers() = {googleOffer});
+		hokify.removeJobOffer(googleOffer);
+		assert(hokify.getJobOffers() = {});
+		
+);
+
+private testMatching : () ==> ()
+testMatching() ==
+(
+		
+		dcl hokify : Hokify := new Hokify();
+		
+		andre.createCV();
+		tomas.createCV();
+		hokify.addUser(andre);
+		hokify.addUser(tomas);
+		
+		hokify.addJobOffer(googleOffer);
+		hokify.addJobOffer(facebookOffer);
+	
+		assert(hokify.getMatchingOffersForUser(andre) = {});
+		assert(hokify.getMatchingOffersForUser(tomas) = {});
+		
+		andre.getCV().addSkill("Java");
+		assert(hokify.getMatchingOffersForUser(andre) = {googleOffer});
+		assert(hokify.getMatchingUsersForOffer(googleOffer) = {andre});
+		
+		tomas.getCV().addSkill("C");
+		assert(hokify.getMatchingOffersForUser(tomas) = {facebookOffer});
+		assert(hokify.getMatchingUsersForOffer(facebookOffer) = {tomas});
+		
+		andre.getCV().addSkill("C");
+		assert(hokify.getMatchingOffersForUser(andre) = {googleOffer, facebookOffer});
+		assert(hokify.getMatchingUsersForOffer(facebookOffer) = {andre, tomas});
+		
+);
+
+public runTests : () ==> ()
+runTests() ==
+(
+		testHokify();
+		testUsers();
+		testJobOffers();
+		testMatching();
+);
+functions
+-- TODO Define functiones here
+traces
+-- TODO Define Combinatorial Test Traces here
+end HokifyTests

@@ -20,7 +20,13 @@ operations
 		
 	public getMatchingOffersForUser: User  ==> set of JobOffer
 		getMatchingOffersForUser(u) ==
-		return u.getMatchingOffers(jobOffers);
+		return u.getMatchingOffers(jobOffers)
+			pre u in set users;
+			
+	public getMatchingUsersForOffer: JobOffer  ==> set of User
+		getMatchingUsersForOffer(job) ==
+		return job.getMatchingOffers(users)
+			pre job in set jobOffers;
     			
  	public addUser :User ==> ()
 		addUser(u) == 
