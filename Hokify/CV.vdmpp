@@ -2,12 +2,10 @@ class CV
 types
 								 
 											 
-		public education = <HighSchool> | <FineSecondarySchool> | <Teaching> | <MandatorySchool> | <UniversityCollege> ;
+		public Education = <HighSchool> | <FineSecondarySchool> | <Teaching> | <MandatorySchool> | <UniversityCollege> ;
 		
-		public drivingLicense = <A> | <B> | <C> | <D>;
+		public DriversLicense = <A> | <B> | <C> | <D>;
 	
-		
-		
 		
 values
 -- TODO Define values here
@@ -18,44 +16,55 @@ instance variables
 	hobbies : set of seq of char ;
 	skills : set of seq of char;
 	workExperience:	set of PastJob := {};
+	driversLicense : [DriversLicense];
+	education: set of Education;
 	
 		
 operations
 
-			public CV: seq of char * seq of char * seq of char  ==> CV
-				CV(fName,lName,e) == (
+			public CV: seq of char * seq of char * seq of char * [DriversLicense] * set of Education  ==> CV
+				CV(fName,lName,e, license, edu) == (
 					workExperience := {};
 					skills := {};
 					hobbies := {};
 					firstName := fName;
 					lastName := lName;
 					email := e;
+					driversLicense := license;
+					education := edu;
 			);		
 			
 
 			pure public getHobbies: () ==> set of seq of char
-				getHobbies()  ==
+			getHobbies()  ==
 				return hobbies;
 				
 			pure public getSkills: () ==> set of seq of char
-				getSkills()  ==
+			getSkills()  ==
 				return skills;				
 
-			pure public getWorkExperience: () ==> set of Job
-				getWorkExperience()  ==
+			pure public getWorkExperience: () ==> set of PastJob
+			getWorkExperience()  ==
 				return workExperience;	
-	
+			
+			pure public getDriversLicense: () ==> [DriversLicense]
+			getDriversLicense() ==
+				return driversLicense;
+			
+			pure public getEducation: () ==> set of CV`Education
+				getEducation()  ==
+				return education;	
 	
 			public addPastJob : PastJob ==> ()
-				addPastJob(j) == 
+			addPastJob(j) == 
 				workExperience := workExperience union {j}
-					pre j not in set workExperience
+					pre not exists job in set workExperience & PastJob`equals(job, j)
     			post j in set workExperience;
 				
  			public removePastJob : PastJob ==> ()
 				removePastJob(j) == 
 				workExperience := workExperience \ {j}
-					pre j  in set workExperience
+					pre exists job in set workExperience & PastJob`equals(job, j)
     			post j not in set workExperience;
     
     			
@@ -84,9 +93,15 @@ operations
 					pre s  in set skills
     			post s not in set skills;
     			
-    							
-functions
--- TODO Define functiones here
-traces
--- TODO Define Combinatorial Test Traces here
+    		public addEducation : CV`Education ==> ()
+				addEducation(edu) ==
+				education := education union {edu}
+				pre edu not in set education
+				post edu in set education;
+				
+			public setDriversLicense : CV`DriversLicense ==> ()
+				setDriversLicense(license) ==
+				driversLicense := license;
+    		
+    			
 end CV

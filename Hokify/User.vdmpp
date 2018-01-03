@@ -8,9 +8,8 @@ instance variables
 		lastName: seq of char;
 		email: seq of char;
 		phonenumber: nat;
-		curriculumVitae : CV;
-		jobOffer: set of JobOffer := {};
-	
+		curriculumVitae : [CV] := nil;
+		appliances: set of JobOffer; 
 		
 operations
 
@@ -20,22 +19,28 @@ User(fName,lName,e,p) == (
 				lastName := lName;
 				email := e;
 				phonenumber := p;
+				appliances := {};
 );
 
 			public createCV : () ==> ()
 				createCV() ==
-				curriculumVitae := new CV(firstName, lastName,email);
+				curriculumVitae := new CV(firstName, lastName,email, nil, {});
 				
-		
+			public offerMatches : JobOffer ==> bool
+			offerMatches(offer) ==
+			return (offer.getRequiredDriversLicense() = nil or curriculumVitae.getDriversLicense() = offer.getRequiredDriversLicense()) and
+			(offer.getRequiredEducation() = {} or offer.getRequiredEducation() inter curriculumVitae.getEducation() <> {}) and
+			(offer.getNeededSkills() = {} or card (curriculumVitae.getSkills() inter offer.getNeededSkills()) / card offer.getNeededSkills() > 0.5);
 			
 			public getMatchingOffers: set of JobOffer ==> set of JobOffer 
 				getMatchingOffers(offers) ==
 				(dcl validJobs : set of JobOffer := {};
 				for all offer in set offers do
-					if card (curriculumVitae.getSkills() inter offer.getNeededSkills()) / card offer.getNeededSkills() > 0.5
+					if offerMatches(offer)
 					then validJobs := validJobs union {offer};
 				return validJobs
-				);
+				)
+				pre curriculumVitae <> nil;
 					
 
 			pure public getFirstName: () ==> seq of char
@@ -54,19 +59,23 @@ User(fName,lName,e,p) == (
 				getPhoneNumber()  ==
 				return phonenumber;
 										
-			pure public getCV: () ==> CV
+			pure public getCV: () ==> [CV]
 				getCV()  ==
 				return curriculumVitae;
 	
-
-				
 			public addPastJob : PastJob ==> ()
 				addPastJob(j) == 
-				curriculumVitae.addPastJob(j);
+				curriculumVitae.addPastJob(j)
+				pre curriculumVitae <> nil and 
+				not exists job in set curriculumVitae.getWorkExperience() &
+				PastJob`equals(job, j);
 				
 			public removePastJob : PastJob ==> ()
 				removePastJob(j) ==
-				curriculumVitae.removePastJob(j);
+				curriculumVitae.removePastJob(j)
+				pre curriculumVitae <> nil and 
+				exists job in set curriculumVitae.getWorkExperience() &
+				PastJob`equals(job, j);
 
 			public addSkill : seq of char ==> ()
 				addSkill(s) == 
@@ -84,10 +93,31 @@ User(fName,lName,e,p) == (
 				removeHobbie(h) ==
 				curriculumVitae.removeHobbie(h);		
 				
+			public applyForJob : JobOffer ==> ()
+			applyForJob(j) ==
+			(
+				appliances := appliances union {j};
+				j.addAppliance(self);
+			);
+			
+			public declinedJob : JobOffer ==> ()
+			declinedJob(job) ==
+			(
+				appliances := appliances \ {job};
+			);
+			
+			public acceptedJob : JobOffer ==> ()
+			acceptedJob(job) ==
+			(
+				appliances := appliances \ {job};
+				curriculumVitae.addPastJob(new PastJob(job.getCompany(), job.getPosition(), mk_Job`Date(2018, 01, 03), nil));
+			);
 						
 functions
 
-
+public equals : User * User -> bool
+equals(u1, u2) ==
+		u1.email = u2.email;
 
 traces
 -- TODO Define Combinatorial Test Traces here

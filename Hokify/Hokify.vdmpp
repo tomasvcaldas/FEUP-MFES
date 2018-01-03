@@ -21,40 +21,57 @@ operations
 	public getMatchingOffersForUser: User  ==> set of JobOffer
 		getMatchingOffersForUser(u) ==
 		return u.getMatchingOffers(jobOffers)
-			pre u in set users;
+			pre exists user in set users & User`equals(user, u);
 			
 	public getMatchingUsersForOffer: JobOffer  ==> set of User
 		getMatchingUsersForOffer(job) ==
 		return job.getMatchingOffers(users)
-			pre job in set jobOffers;
+			pre exists j in set jobOffers & JobOffer`equals(j, job);
     			
  	public addUser :User ==> ()
 		addUser(u) == 
 		users := users union {u}
-			pre u not in set users
+			pre not exists user in set users & User`equals(user, u)
   		post u in set users;
 				
 				
 	public removeUser : User ==> ()
 		removeUser(u) ==
-		users := users \ {u}
-			pre u  in set users
-    	post u not in set users;
+		(
+			for all user in set users do
+				if User`equals(user, u) 
+				then users := users \ {user};
+		)
+			pre exists user in set users & User`equals(user, u)
+    	post not exists user in set users & User`equals(user, u);
 
  	public addJobOffer :JobOffer==> ()
 		addJobOffer(j) == 
 		jobOffers := jobOffers union {j}
-			pre j not in set jobOffers
+			pre not exists job in set jobOffers & JobOffer`equals(job, j)
   		post j in set jobOffers;
 				
 				
 	public removeJobOffer: JobOffer ==> ()
 		removeJobOffer(j) ==
-		jobOffers := jobOffers \ {j}
-			pre j  in set jobOffers
-    	post j not in set jobOffers;
-functions
--- TODO Define functiones here
-traces
--- TODO Define Combinatorial Test Traces here
+		(
+			for all job in set jobOffers do
+				if JobOffer`equals(job, j) 
+				then jobOffers := jobOffers \ {job};
+		)
+			pre exists job in set jobOffers & JobOffer`equals(job, j)
+    	post not exists job in set jobOffers & JobOffer`equals(job, j);
+    	
+   public addAppliance : User * JobOffer ==> ()
+   addAppliance(u, j) ==
+   		u.applyForJob(j);
+   
+   public acceptAppliance : User * JobOffer ==> ()
+   acceptAppliance(u, j) ==
+   		j.acceptAppliance(u);
+   		
+   public declineAppliance : User * JobOffer ==> ()
+   declineAppliance(u, j) ==
+   		j.declineAppliance(u);
+    	
 end Hokify

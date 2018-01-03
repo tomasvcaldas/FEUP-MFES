@@ -9,7 +9,7 @@ instance variables
 		endDate: Date;
 		inv validDates(startDate, endDate);
 operations
-public PastJob : seq of char * seq of char * Date * Date ==> PastJob
+public PastJob : seq of char * seq of char * Date * [Date] ==> PastJob
 PastJob(c,p,sDate,eDate) == (
 				startDate := sDate;
 				endDate := eDate;
@@ -28,11 +28,14 @@ pure public getEndDate: () ==> Date
 -- TODO Define operations here
 functions 
 			
-public validDates : Date * Date -> bool
+public validDates : Date * [Date] -> bool
 validDates(d1, d2) ==
-		d2.year > d1.year or (d2.year = d1.year and d2.month > d1.month) or 
-			(d2.year = d1.year and d2.month = d1.month and d2.day > d1.day);
+		d2 = nil or (d2.year > d1.year or (d2.year = d1.year and d2.month > d1.month) or 
+			(d2.year = d1.year and d2.month = d1.month and d2.day > d1.day));
+			
+public equals : PastJob * PastJob -> bool
+equals(j1, j2) ==
+		j1.startDate = j2.startDate and j1.endDate = j2.endDate and
+				j1.company = j2.company and j1.position = j2.position;
 
-traces
--- TODO Define Combinatorial Test Traces here
 end PastJob

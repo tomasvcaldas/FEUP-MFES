@@ -8,12 +8,12 @@ instance variables
 	openPositions: nat;
 	appliances: set of User;
 	neededSkills: set of seq of char;
-	requiredEducation: set of CV`education;
-	requiredDriversLicense: CV`drivingLicense;
+	requiredEducation: set of CV`Education;
+	requiredDriversLicense: [CV`DriversLicense];
 	
 operations
 -- TODO Define operations here
-public JobOffer : seq of char * seq of char * nat * set of seq of char * set of CV`education * CV`drivingLicense ==> JobOffer
+public JobOffer : seq of char * seq of char * nat * set of seq of char * set of CV`Education * [CV`DriversLicense] ==> JobOffer
 JobOffer(c, p, openPos, skills, reqEdu, reqLicense) == (
         openPositions := openPos;
         appliances := {};
@@ -35,11 +35,11 @@ pure public getNeededSkills: () ==> set of seq of char
         getNeededSkills()  ==
         return neededSkills;
         
-pure public getRequiredEducation: () ==> set of CV`education
+pure public getRequiredEducation: () ==> set of CV`Education
         getRequiredEducation()  ==
         return requiredEducation;
     
-pure public getRequiredDriversLicense: () ==> CV`drivingLicense
+pure public getRequiredDriversLicense: () ==> [CV`DriversLicense]
         getRequiredDriversLicense()  ==
         return requiredDriversLicense;
         
@@ -59,13 +59,34 @@ public getMatchingOffers: set of User ==> set of User
 getMatchingOffers(users) ==
 				(dcl validCandidates : set of User := {};
 				for all user in set users do
-					if card (user.getCV().getSkills() inter neededSkills) / card neededSkills > 0.5
+					if neededSkills = {} or 
+					(user.getCV() <> nil and card (user.getCV().getSkills() inter neededSkills) / card neededSkills > 0.5)
 					then validCandidates := validCandidates union {user};
 				return validCandidates
 				);
 
+public acceptAppliance : User ==> ()
+acceptAppliance(u) == 
+(
+		removeAppliance(u);
+		openPositions := openPositions - 1;
+		u.acceptedJob(self);
+);
+
+public declineAppliance : User ==> ()
+declineAppliance(u) == 
+(
+		removeAppliance(u);
+		u.declinedJob(self)
+);
+
+
 functions
--- TODO Define functiones here
-traces
--- TODO Define Combinatorial Test Traces here
+
+public equals : JobOffer * JobOffer -> bool
+equals(j1, j2) ==
+		j1.company = j2.company and j1.position = j2.position and
+		j1.neededSkills = j2.neededSkills and j1.requiredEducation = j2.requiredEducation and
+		j1.requiredDriversLicense = j2.requiredDriversLicense;
+
 end JobOffer

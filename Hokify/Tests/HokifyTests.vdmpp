@@ -6,9 +6,9 @@ values
 instance variables
 	andre: User := new User("Andre", "Reis", "andre@gmail.com", 917777777);
 	tomas : User := new User("Tomas", "Caldas", "tomas@gmail.com", 919999999);
-	allEducations : set of CV`education := {<HighSchool>, <FineSecondarySchool>, <Teaching>, <MandatorySchool>, <UniversityCollege>};
-	googleOffer : JobOffer := new JobOffer("Google", "CTO", 1, {"Java"}, allEducations, <C>);
-	facebookOffer : JobOffer := new JobOffer("Facebook", "CodeMonkey", 1, {"C"}, allEducations, <C>);
+	allEducations : set of CV`Education := {<HighSchool>, <FineSecondarySchool>, <Teaching>, <MandatorySchool>, <UniversityCollege>};
+	googleOffer : JobOffer := new JobOffer("Google", "CTO", 1, {"Java"}, {}, nil);
+	facebookOffer : JobOffer := new JobOffer("Facebook", "CodeMonkey", 1, {"C"}, {}, nil);
 operations
 -- TODO Define operations here
 private testHokify : () ==> ()

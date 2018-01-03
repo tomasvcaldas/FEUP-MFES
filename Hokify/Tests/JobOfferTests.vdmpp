@@ -10,7 +10,7 @@ operations
 	private testJobOfferParams : () ==> ()
 	testJobOfferParams() ==
 	(
-				dcl allEducations : set of CV`education := {<HighSchool>, <FineSecondarySchool>, <Teaching>, <MandatorySchool>, <UniversityCollege>};
+				dcl allEducations : set of CV`Education := {<HighSchool>, <FineSecondarySchool>, <Teaching>, <MandatorySchool>, <UniversityCollege>};
 			  dcl jobOffer : JobOffer := new JobOffer("Google", "CTO", 1, {}, allEducations, <C>);
 			  
 			  assert(jobOffer.getCompany() = "Google");
@@ -25,7 +25,7 @@ operations
 	private testAppliances : () ==> ()
 	testAppliances() == 
 	(
-			dcl allEducations : set of CV`education := {<HighSchool>, <FineSecondarySchool>, <Teaching>, <MandatorySchool>, <UniversityCollege>};
+			dcl allEducations : set of CV`Education := {<HighSchool>, <FineSecondarySchool>, <Teaching>, <MandatorySchool>, <UniversityCollege>};
 			dcl jobOffer : JobOffer := new JobOffer("Google", "CTO", 1, {}, allEducations, <C>);
 			dcl andre : User := new User("Andre", "Reis", "andre@gmail.com", 917777777);
 			dcl tomas : User := new User("Tomas", "Caldas", "tomas@gmail.com", 919999999);
