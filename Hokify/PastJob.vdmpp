@@ -6,7 +6,7 @@ values
 instance variables
 	
 		startDate: Date;
-		endDate: Date;
+		endDate: [Date];
 		inv validDates(startDate, endDate);
 operations
 public PastJob : seq of char * seq of char * Date * [Date] ==> PastJob
@@ -33,8 +33,8 @@ validDates(d1, d2) ==
 		d2 = nil or (d2.year > d1.year or (d2.year = d1.year and d2.month > d1.month) or 
 			(d2.year = d1.year and d2.month = d1.month and d2.day > d1.day));
 			
-public equals : PastJob * PastJob -> bool
-equals(j1, j2) ==
+public areEqual : PastJob * PastJob -> bool
+areEqual(j1, j2) ==
 		j1.startDate = j2.startDate and j1.endDate = j2.endDate and
 				j1.company = j2.company and j1.position = j2.position;
 

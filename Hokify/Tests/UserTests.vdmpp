@@ -22,7 +22,7 @@ operations
 			(
 				dcl u : User := new User("Tomas","Caldas","tomasvcaldas@gmail.com",925302024);
 				dcl googleJob : PastJob := new PastJob("Google","CEO", mk_Job`Date(2007, 03, 12), mk_Job`Date(2007, 09, 12));
-				dcl facebookJob : PastJob := new PastJob("Facebook","Tester", mk_Job`Date(2007, 03, 12), mk_Job`Date(2007, 03, 31));
+				dcl facebookJob : PastJob := new PastJob("Facebook","Tester", mk_Job`Date(2008, 03, 12), mk_Job`Date(2008, 03, 31));
 				
 				u.createCV();
 				assert(u.getCV().getHobbies() = {});
@@ -36,8 +36,8 @@ operations
 				
 				assert(facebookJob.getCompany() = "Facebook");
 				assert(facebookJob.getPosition() = "Tester");
-				assert(facebookJob.getStartDate() = mk_Job`Date(2007, 03, 12));
-				assert(facebookJob.getEndDate() =  mk_Job`Date(2007, 03, 31));
+				assert(facebookJob.getStartDate() = mk_Job`Date(2008, 03, 12));
+				assert(facebookJob.getEndDate() =  mk_Job`Date(2008, 03, 31));
 				
 				u.addPastJob(googleJob);
 				assert(u.getCV().getWorkExperience() = {googleJob});
@@ -65,6 +65,12 @@ operations
 				assert(u.getCV().getSkills() = {"C#"});
 				u.removeSkill("C#");	
 				assert(u.getCV().getSkills() = {});			
+				
+				u.setDriversLicense(<C>);
+				assert(u.getCV().getDriversLicense() = <C>);
+				
+				u.addEducation(<UniversityCollege>);
+				assert(u.getCV().getEducation() = {<UniversityCollege>});
 			);
 	
 		

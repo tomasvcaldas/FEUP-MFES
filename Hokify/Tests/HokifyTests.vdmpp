@@ -7,8 +7,8 @@ instance variables
 	andre: User := new User("Andre", "Reis", "andre@gmail.com", 917777777);
 	tomas : User := new User("Tomas", "Caldas", "tomas@gmail.com", 919999999);
 	allEducations : set of CV`Education := {<HighSchool>, <FineSecondarySchool>, <Teaching>, <MandatorySchool>, <UniversityCollege>};
-	googleOffer : JobOffer := new JobOffer("Google", "CTO", 1, {"Java"}, {}, nil);
-	facebookOffer : JobOffer := new JobOffer("Facebook", "CodeMonkey", 1, {"C"}, {}, nil);
+	googleOffer : JobOffer := new JobOffer("Google", "CTO", 1, {"Java"}, {}, <C>);
+	facebookOffer : JobOffer := new JobOffer("Facebook", "CodeMonkey", 1, {"C"}, {<HighSchool>}, nil);
 operations
 -- TODO Define operations here
 private testHokify : () ==> ()
@@ -62,6 +62,8 @@ testMatching() ==
 		
 		andre.createCV();
 		tomas.createCV();
+		andre.setDriversLicense(<C>);
+		tomas.addEducation(<HighSchool>);
 		hokify.addUser(andre);
 		hokify.addUser(tomas);
 		
@@ -71,18 +73,49 @@ testMatching() ==
 		assert(hokify.getMatchingOffersForUser(andre) = {});
 		assert(hokify.getMatchingOffersForUser(tomas) = {});
 		
-		andre.getCV().addSkill("Java");
+		andre.addSkill("Java");
 		assert(hokify.getMatchingOffersForUser(andre) = {googleOffer});
 		assert(hokify.getMatchingUsersForOffer(googleOffer) = {andre});
 		
-		tomas.getCV().addSkill("C");
+		tomas.addSkill("C");
 		assert(hokify.getMatchingOffersForUser(tomas) = {facebookOffer});
 		assert(hokify.getMatchingUsersForOffer(facebookOffer) = {tomas});
 		
-		andre.getCV().addSkill("C");
+		andre.addSkill("C");
+		andre.addEducation(<HighSchool>);
 		assert(hokify.getMatchingOffersForUser(andre) = {googleOffer, facebookOffer});
 		assert(hokify.getMatchingUsersForOffer(facebookOffer) = {andre, tomas});
 		
+);
+
+private testAppliance : () ==> ()
+testAppliance() ==
+(
+		dcl hokify : Hokify := new Hokify();
+		dcl googleOpenPos : nat := googleOffer.getOpenPositions();
+
+		assert(googleOffer.getAppliances() = {});
+		
+		hokify.addAppliance(andre, googleOffer);
+		assert(googleOffer.getAppliances() = {andre});
+		assert(andre.getAppliances() = {googleOffer});
+		
+		hokify.addAppliance(tomas, googleOffer);
+		assert(googleOffer.getAppliances() = {andre, tomas});
+		assert(tomas.getAppliances() = {googleOffer});
+		
+		hokify.acceptAppliance(andre, googleOffer);
+		assert(googleOffer.getOpenPositions() = googleOpenPos - 1);
+		assert(googleOffer.getAppliances() = {tomas});
+		assert(andre.getAppliances() = {});
+		assert(exists job in set andre.getCV().getWorkExperience() & 
+			PastJob`areEqual(job, new PastJob(googleOffer.getCompany(), googleOffer.getPosition(), mk_Job`Date(2018, 01, 03), nil)));
+		googleOpenPos := googleOffer.getOpenPositions();
+		
+		hokify.declineAppliance(tomas, googleOffer);
+		assert(googleOffer.getOpenPositions() = googleOpenPos);
+		assert(googleOffer.getAppliances() = {});
+		assert(tomas.getAppliances() = {});
 );
 
 public runTests : () ==> ()
@@ -92,6 +125,7 @@ runTests() ==
 		testUsers();
 		testJobOffers();
 		testMatching();
+		testAppliance();
 );
 functions
 -- TODO Define functiones here

@@ -21,17 +21,17 @@ operations
 	public getMatchingOffersForUser: User  ==> set of JobOffer
 		getMatchingOffersForUser(u) ==
 		return u.getMatchingOffers(jobOffers)
-			pre exists user in set users & User`equals(user, u);
+			pre exists user in set users & User`areEqual(user, u);
 			
 	public getMatchingUsersForOffer: JobOffer  ==> set of User
 		getMatchingUsersForOffer(job) ==
 		return job.getMatchingOffers(users)
-			pre exists j in set jobOffers & JobOffer`equals(j, job);
+			pre exists j in set jobOffers & JobOffer`areEqual(j, job);
     			
  	public addUser :User ==> ()
 		addUser(u) == 
 		users := users union {u}
-			pre not exists user in set users & User`equals(user, u)
+			pre not exists user in set users & User`areEqual(user, u)
   		post u in set users;
 				
 				
@@ -39,16 +39,16 @@ operations
 		removeUser(u) ==
 		(
 			for all user in set users do
-				if User`equals(user, u) 
+				if User`areEqual(user, u) 
 				then users := users \ {user};
 		)
-			pre exists user in set users & User`equals(user, u)
-    	post not exists user in set users & User`equals(user, u);
+			pre exists user in set users & User`areEqual(user, u)
+    	post not exists user in set users & User`areEqual(user, u);
 
  	public addJobOffer :JobOffer==> ()
 		addJobOffer(j) == 
 		jobOffers := jobOffers union {j}
-			pre not exists job in set jobOffers & JobOffer`equals(job, j)
+			pre not exists job in set jobOffers & JobOffer`areEqual(job, j)
   		post j in set jobOffers;
 				
 				
@@ -56,11 +56,11 @@ operations
 		removeJobOffer(j) ==
 		(
 			for all job in set jobOffers do
-				if JobOffer`equals(job, j) 
+				if JobOffer`areEqual(job, j) 
 				then jobOffers := jobOffers \ {job};
 		)
-			pre exists job in set jobOffers & JobOffer`equals(job, j)
-    	post not exists job in set jobOffers & JobOffer`equals(job, j);
+			pre exists job in set jobOffers & JobOffer`areEqual(job, j)
+    	post not exists job in set jobOffers & JobOffer`areEqual(job, j);
     	
    public addAppliance : User * JobOffer ==> ()
    addAppliance(u, j) ==

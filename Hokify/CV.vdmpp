@@ -58,13 +58,13 @@ operations
 			public addPastJob : PastJob ==> ()
 			addPastJob(j) == 
 				workExperience := workExperience union {j}
-					pre not exists job in set workExperience & PastJob`equals(job, j)
+					pre not exists job in set workExperience & PastJob`areEqual(job, j)
     			post j in set workExperience;
 				
  			public removePastJob : PastJob ==> ()
 				removePastJob(j) == 
 				workExperience := workExperience \ {j}
-					pre exists job in set workExperience & PastJob`equals(job, j)
+					pre exists job in set workExperience & PastJob`areEqual(job, j)
     			post j not in set workExperience;
     
     			

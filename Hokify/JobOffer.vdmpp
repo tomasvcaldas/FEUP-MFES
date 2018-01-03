@@ -83,8 +83,8 @@ declineAppliance(u) ==
 
 functions
 
-public equals : JobOffer * JobOffer -> bool
-equals(j1, j2) ==
+public areEqual : JobOffer * JobOffer -> bool
+areEqual(j1, j2) ==
 		j1.company = j2.company and j1.position = j2.position and
 		j1.neededSkills = j2.neededSkills and j1.requiredEducation = j2.requiredEducation and
 		j1.requiredDriversLicense = j2.requiredDriversLicense;

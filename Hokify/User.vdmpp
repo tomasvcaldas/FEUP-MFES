@@ -62,20 +62,24 @@ User(fName,lName,e,p) == (
 			pure public getCV: () ==> [CV]
 				getCV()  ==
 				return curriculumVitae;
+				
+			pure public getAppliances: () ==> set of JobOffer
+				getAppliances() ==
+				return appliances;
 	
 			public addPastJob : PastJob ==> ()
 				addPastJob(j) == 
 				curriculumVitae.addPastJob(j)
 				pre curriculumVitae <> nil and 
 				not exists job in set curriculumVitae.getWorkExperience() &
-				PastJob`equals(job, j);
+				PastJob`areEqual(job, j);
 				
 			public removePastJob : PastJob ==> ()
 				removePastJob(j) ==
 				curriculumVitae.removePastJob(j)
 				pre curriculumVitae <> nil and 
 				exists job in set curriculumVitae.getWorkExperience() &
-				PastJob`equals(job, j);
+				PastJob`areEqual(job, j);
 
 			public addSkill : seq of char ==> ()
 				addSkill(s) == 
@@ -91,7 +95,15 @@ User(fName,lName,e,p) == (
 				
 			public removeHobbie : seq of char ==> ()
 				removeHobbie(h) ==
-				curriculumVitae.removeHobbie(h);		
+				curriculumVitae.removeHobbie(h);	
+				
+			public setDriversLicense : CV`DriversLicense ==> ()
+				setDriversLicense(license) ==
+				curriculumVitae.setDriversLicense(license);
+				
+			public addEducation : CV`Education ==> ()
+				addEducation(edu) ==
+				curriculumVitae.addEducation(edu);
 				
 			public applyForJob : JobOffer ==> ()
 			applyForJob(j) ==
@@ -115,8 +127,8 @@ User(fName,lName,e,p) == (
 						
 functions
 
-public equals : User * User -> bool
-equals(u1, u2) ==
+public areEqual : User * User -> bool
+areEqual(u1, u2) ==
 		u1.email = u2.email;
 
 traces
