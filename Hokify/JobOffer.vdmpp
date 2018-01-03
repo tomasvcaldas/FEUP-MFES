@@ -12,7 +12,7 @@ instance variables
 	requiredDriversLicense: [CV`DriversLicense];
 	
 operations
--- TODO Define operations here
+--Job Offer constructor, initializes the variables
 public JobOffer : seq of char * seq of char * nat * set of seq of char * set of CV`Education * [CV`DriversLicense] ==> JobOffer
 JobOffer(c, p, openPos, skills, reqEdu, reqLicense) == (
         openPositions := openPos;
@@ -22,39 +22,39 @@ JobOffer(c, p, openPos, skills, reqEdu, reqLicense) == (
         requiredDriversLicense := reqLicense;
         Job(c, p);
 );
-
+--Returns the number of open positions
 pure public getOpenPositions: () ==> nat
         getOpenPositions()  ==
         return openPositions;
-        
+--Returns all the appliances for the job        
 pure public getAppliances: () ==> set of User
         getAppliances()  ==
         return appliances;
-        
+--Returns the needed skills for the job        
 pure public getNeededSkills: () ==> set of seq of char
         getNeededSkills()  ==
         return neededSkills;
-        
+--Returns the needed education for the job        
 pure public getRequiredEducation: () ==> set of CV`Education
         getRequiredEducation()  ==
         return requiredEducation;
-    
+--Returns the needed drivers license for the job    
 pure public getRequiredDriversLicense: () ==> [CV`DriversLicense]
         getRequiredDriversLicense()  ==
         return requiredDriversLicense;
-        
+--Adds an user to the users that applied for that job        
 public addAppliance : User ==> ()
         addAppliance(user) ==
         appliances := appliances union {user}
         pre user not in set appliances
         post user in set appliances;
-        
+--Removes an user from the users that applied for the job        
 public removeAppliance : User ==> ()
         removeAppliance(user) ==
         appliances := appliances \ {user}
         pre user in set appliances
         post user not in set appliances;
-        
+--Returns the valid candidates for a job offer
 public getMatchingOffers: set of User ==> set of User 
 getMatchingOffers(users) ==
 				(dcl validCandidates : set of User := {};
@@ -64,7 +64,7 @@ getMatchingOffers(users) ==
 					then validCandidates := validCandidates union {user};
 				return validCandidates
 				);
-
+--Accepts an user appliance for an offer
 public acceptAppliance : User ==> ()
 acceptAppliance(u) == 
 (
@@ -72,7 +72,7 @@ acceptAppliance(u) ==
 		openPositions := openPositions - 1;
 		u.acceptedJob(self);
 );
-
+--Declines an user appliance for an offer
 public declineAppliance : User ==> ()
 declineAppliance(u) == 
 (
@@ -82,9 +82,9 @@ declineAppliance(u) ==
 
 
 functions
-
-public areEqual : JobOffer * JobOffer -> bool
-areEqual(j1, j2) ==
+--Verifies if two job offers are equal
+public equals : JobOffer * JobOffer -> bool
+equals(j1, j2) ==
 		j1.company = j2.company and j1.position = j2.position and
 		j1.neededSkills = j2.neededSkills and j1.requiredEducation = j2.requiredEducation and
 		j1.requiredDriversLicense = j2.requiredDriversLicense;

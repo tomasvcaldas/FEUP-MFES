@@ -19,7 +19,7 @@ instance variables
 
 
 operations
-
+--Job constructor, initializes job variables
 public Job: seq of char * seq of char  ==> Job
 Job(c,p) == (
 				company:= c;
@@ -27,11 +27,11 @@ Job(c,p) == (
 )
 	post company= c and position= p;
 	
-	
+--Returns the company of that job
 				pure public getCompany: () ==> seq of char
 					getCompany()  ==
 					return company;
-				
+--Returns the position of that job				
 				pure public getPosition: () ==> seq of char
 					getPosition()  ==
 					return position;				

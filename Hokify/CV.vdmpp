@@ -21,7 +21,7 @@ instance variables
 	
 		
 operations
-
+--User constructor, initializes the CV variables.
 			public CV: seq of char * seq of char * seq of char * [DriversLicense] * set of Education  ==> CV
 				CV(fName,lName,e, license, edu) == (
 					workExperience := {};
@@ -34,71 +34,71 @@ operations
 					education := edu;
 			);		
 			
-
+--Returns the set of hobbies
 			pure public getHobbies: () ==> set of seq of char
 			getHobbies()  ==
 				return hobbies;
-				
+--Returns the set of skills				
 			pure public getSkills: () ==> set of seq of char
 			getSkills()  ==
 				return skills;				
-
+--Returns the set of past jobs
 			pure public getWorkExperience: () ==> set of PastJob
 			getWorkExperience()  ==
 				return workExperience;	
-			
+--Returns the driver license			
 			pure public getDriversLicense: () ==> [DriversLicense]
 			getDriversLicense() ==
 				return driversLicense;
-			
+--Returns the set of education 			
 			pure public getEducation: () ==> set of CV`Education
 				getEducation()  ==
 				return education;	
-	
+--Adds a past job to past jobs
 			public addPastJob : PastJob ==> ()
 			addPastJob(j) == 
 				workExperience := workExperience union {j}
 					pre not exists job in set workExperience & PastJob`areEqual(job, j)
     			post j in set workExperience;
-				
+--Removes past job from past jobs				
  			public removePastJob : PastJob ==> ()
 				removePastJob(j) == 
 				workExperience := workExperience \ {j}
 					pre exists job in set workExperience & PastJob`areEqual(job, j)
     			post j not in set workExperience;
     
-    			
+--Adds hobby to hobbies    			
  			public addHobbie : seq of char ==> ()
 				addHobbie(h) == 
 				hobbies := hobbies union {h}
 					pre h not in set hobbies
     			post h in set hobbies;
-				
+--Removes hobbie from hobbies				
  			public removeHobbie : seq of char ==> ()
 				removeHobbie(h) == 
 				hobbies := hobbies \ {h}
 					pre h  in set hobbies
     			post h not in set hobbies;
     			   	
-
+--Adds skill to skills
  			public addSkill : seq of char ==> ()
 				addSkill(s) == 
 				skills := skills union {s}
 					pre s not in set skills
     			post s in set skills;
-				
+--Removes skill from skills				
  			public removeSkill : seq of char ==> ()
 				removeSkill(s) == 
 				skills := skills \ {s}
 					pre s  in set skills
     			post s not in set skills;
-    			
+ --Adds a type of education to educations   			
     		public addEducation : CV`Education ==> ()
 				addEducation(edu) ==
 				education := education union {edu}
 				pre edu not in set education
 				post edu in set education;
-				
+--Defines the driver license of the CV of the user				
 			public setDriversLicense : CV`DriversLicense ==> ()
 				setDriversLicense(license) ==
 				driversLicense := license;
